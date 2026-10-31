@@ -1,132 +1,110 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ghorer Bajar India</title>
-<link rel="manifest" href="manifest.json">
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:sans-serif}
-body{background:#f5f5f5}
-.header{background:#0a8a28;color:#fff;padding:12px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:99}
-.banner{width:100%;height:180px;overflow-x:auto;display:flex;scroll-snap-type:x mandatory}
-.banner img{width:100%;flex:0 0 100%;scroll-snap-align:start;object-fit:cover}
-.cat{display:flex;gap:10px;padding:10px;overflow-x:auto}
-.cat button{padding:8px 16px;border-radius:20px;border:1px solid #0a8a28;background:#fff;white-space:nowrap}
-.cat button.active{background:#0a8a28;color:#fff}
-.products{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:10px}
-.card{background:#fff;border-radius:12px;padding:10px;box-shadow:0 2px 5px #0001}
-.card img{width:100%;height:120px;object-fit:cover;border-radius:8px}
-.btn{background:#0a8a28;color:#fff;border:none;padding:6px 12px;border-radius:6px;width:100%;margin-top:6px}
-.coupon{background:linear-gradient(90deg,#ff9800,#ff5722);color:#fff;padding:12px;margin:10px;border-radius:10px;display:flex;justify-content:space-between}
-.nav{position:fixed;bottom:0;width:100%;background:#fff;display:flex;justify-content:space-around;padding:10px;border-top:1px solid #ddd}
-#cartCount{background:red;color:#fff;border-radius:50%;padding:2px 6px;font-size:12px}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}
+body{background:#f8f9f5}
+.header-top{background:#3a8a5e;color:#fff;padding:15px 15px 25px 15px;border-radius:0 0 25px 25px;position:sticky;top:0;z-index:99}
+.top-row{display:flex;justify-content:space-between;align-items:center}
+.deliver small{opacity:.9;font-size:13px} .deliver b{font-size:28px;line-height:1}
+.location-pill{background:#fff;color:#000;padding:6px 14px;border-radius:20px;font-size:13px;font-weight:600;margin-top:8px;display:inline-flex;align-items:center;gap:5px}
+.search-box{background:#fff;border:2px solid #e8a838;border-radius:15px;padding:12px 15px;display:flex;align-items:center;gap:10px;margin-top:12px}
+.search-box input{border:none;outline:none;flex:1;font-size:16px}
+.banner-wrap{display:flex;gap:10px;overflow-x:auto;padding:15px;scroll-snap-type:x mandatory}
+.banner-card{min-width:85%;height:180px;border-radius:20px;overflow:hidden;scroll-snap-align:center;box-shadow:0 4px 15px #0002;position:relative;background:#fff}
+.banner-card img{width:100%;height:100%;object-fit:cover}
+.cat-title{display:flex;align-items:center;gap:10px;padding:15px;font-weight:700;font-size:18px}
+.cat-title:after{content:'';flex:1;height:2px;background:#222}
+.category-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;padding:0 15px}
+.cat-item{text-align:center}
+.cat-icon{width:70px;height:70px;background:#fdf6e9;border-radius:20px;display:flex;align-items:center;justify-content:center;margin:0 auto 6px;font-size:30px}
+.cat-item p{font-size:12px;font-weight:600;line-height:1.2}
+.products{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:15px}
+.card{background:#fff;border-radius:16px;padding:8px;box-shadow:0 2px 8px #0001}
+.card img{width:100%;height:110px;object-fit:cover;border-radius:12px}
+.coupon{background:linear-gradient(90deg,#ff9800,#ff6a00);color:#fff;padding:12px 15px;margin:8px 15px;border-radius:12px;display:flex;justify-content:space-between;align-items:center;font-weight:600}
+.nav{position:fixed;bottom:0;width:100%;background:#fff;display:flex;justify-content:space-around;padding:12px 0 8px 0;border-top:1px solid #eee;border-radius:20px 20px 0 0}
+.nav div{font-size:12px;text-align:center;opacity:.6} .nav div.active{opacity:1;color:#3a8a5e;font-weight:700}
 </style>
 </head>
 <body>
-<div class="header">
-  <b>🛒 Ghorer Bajar India</b>
-  <div><span onclick="showLogin()">👤</span> <span>Cart <span id="cartCount">0</span></span></div>
+
+<div class="header-top">
+  <div class="top-row">
+    <div class="deliver"><small>Deliver in</small><br><b>90 Minutes</b></div>
+    <div style="display:flex;align-items:center;gap:8px;font-weight:600"><span id="userName">Md Mojayel Hos</span><div style="width:30px;height:30px;background:#fbe8a6;border-radius:50%;display:flex;align-items:center;justify-content:center">👤</div></div>
+  </div>
+  <div class="location-pill">📍 Kaliachak 3,Gopalpur</div>
+  <div class="search-box">🔍 <input type="text" placeholder='Search "Beauty"' id="searchInput" onkeyup="searchProd()"> 🎤</div>
 </div>
 
-<div class="banner" id="banner"></div>
-
-<div style="padding:10px">
-<h3>🔥 Short Videos</h3>
-<div id="videos" style="display:flex;gap:10px;overflow-x:auto"></div>
+<div class="banner-wrap" id="banner">
+  <div class="banner-card"><img src="https://i.ibb.co/3mJ5h7K/ghorer-bajar-logo.png" onerror="this.src='https://via.placeholder.com/400x180?text=Ghorer+Bajar+-+Ghore+Bose+Ghorer+Bazar'"></div>
+  <div class="banner-card"><img src="https://images.unsplash.com/photo-1608198093002-ad4e005484ec?w=800"></div>
+  <div class="banner-card"><img src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=800"></div>
 </div>
 
-<div class="cat" id="categories">
-  <button class="active" onclick="filterCat('all')">All</button>
-  <button onclick="filterCat('Daily Essential')">Daily Essential</button>
-  <button onclick="filterCat('Best Seller')">Best Seller</button>
-  <button onclick="filterCat('Hot Deals')">Hot Deals</button>
+<div class="cat-title">Category</div>
+<div class="category-grid">
+  <div class="cat-item" onclick="filterCat('B2B')"><div class="cat-icon">🤝</div><p>B2B Marketpl...</p></div>
+  <div class="cat-item" onclick="filterCat('Groceries')"><div class="cat-icon">🛒</div><p>Groceries</p></div>
+  <div class="cat-item" onclick="filterCat('Dairy')"><div class="cat-icon">🍞</div><p>Dairy, Bread & ...</p></div>
+  <div class="cat-item" onclick="filterCat('Electronics')"><div class="cat-icon">🔌</div><p>Electronics & Applia...</p></div>
+  <div class="cat-item" onclick="filterCat('Fruits')"><div class="cat-icon">🥦</div><p>Fruits & Vegetables</p></div>
+  <div class="cat-item" onclick="filterCat('Ice')"><div class="cat-icon">🍦</div><p>Ice Creams & More</p></div>
+  <div class="cat-item" onclick="filterCat('Kitchen')"><div class="cat-icon">🍳</div><p>Kitchen & Dining</p></div>
+  <div class="cat-item" onclick="filterCat('Oil')"><div class="cat-icon">🛢️</div><p>Oil, Ghee, Masala &...</p></div>
 </div>
 
 <div id="couponArea"></div>
+
+<div class="cat-title">Everyday Essentials</div>
 <div class="products" id="productList">Loading...</div>
 
-<div style="height:70px"></div>
+<div style="height:90px"></div>
 <div class="nav">
-  <div onclick="location.reload()">🏠 Home</div>
-  <div onclick="showCart()">🛒 Cart</div>
-  <div onclick="showOrders()">📦 Orders</div>
-  <div onclick="showAccount()">👤 Account</div>
+  <div class="active">🏠<br>Home</div>
+  <div onclick="showCat()">⊞⊞<br>Category</div>
+  <div onclick="showCart()">👜<br>Cart <span id="cartCount" style="background:red;color:#fff;border-radius:50%;padding:0 5px">0</span></div>
+  <div>♡<br>Wishlist</div>
 </div>
 
 <script>
 const API='https://ghorerbajar.in/api_india';
 let allProducts=[], cart=JSON.parse(localStorage.getItem('cart')||'[]');
-let user=JSON.parse(localStorage.getItem('user')||'null');
-
 async function loadAll(){
-  // Banners
-  try{
-    let b=await fetch(API+'/banners.php').then(r=>r.json());
-    document.getElementById('banner').innerHTML=b.map(x=>`<img src="${x.image}">`).join('');
-    let v=b.filter(x=>x.type=='short_video');
-    document.getElementById('videos').innerHTML=v.map(x=>`<video src="${x.image}" style="width:120px;height:180px;border-radius:10px" controls></video>`).join('') || '<p>No videos</p>';
-  }catch(e){document.getElementById('banner').innerHTML='<img src="https://via.placeholder.com/400x180?text=Ghorer+Bajar+India">'}
-
-  // Products
-  let p=await fetch(API+'/products.php').then(r=>r.json());
-  allProducts=p;
-  showProducts(p);
-
-  // Coupons
   try{
     let c=await fetch(API+'/coupons.php').then(r=>r.json());
-    document.getElementById('couponArea').innerHTML=c.map(x=>`<div class="coupon"><span>🎁 ${x.code} - ${x.discount} OFF</span><button onclick="applyCoupon('${x.code}')" style="background:#fff;border:none;padding:4px 8px;border-radius:4px">Apply</button></div>`).join('');
+    document.getElementById('couponArea').innerHTML=c.map(x=>`<div class="coupon"><span>🎁 ${x.code} - ${x.discount} OFF</span><button onclick="alert('Coupon ${x.code} Applied')" style="background:#fff;border:none;padding:6px 12px;border-radius:8px;font-weight:700">Apply</button></div>`).join('');
   }catch(e){}
+  try{
+    let p=await fetch(API+'/products.php').then(r=>r.json());
+    allProducts=p; showProducts(p);
+    let b=await fetch(API+'/banners.php').then(r=>r.json());
+    if(b.length>0){
+      document.getElementById('banner').innerHTML = b.map(x=>`<div class="banner-card"><img src="${x.image}" onerror="this.src='https://via.placeholder.com/400x180'"></div>`).join('') + document.getElementById('banner').innerHTML;
+    }
+  }catch(e){ showProducts([{name:'Chal - Miniket 25kg',price:1150,image:'https://via.placeholder.com/200'},{name:'Tel - Soyabean 15L',price:1950,image:'https://via.placeholder.com/200'}]) }
   updateCartCount();
 }
-
 function showProducts(list){
   document.getElementById('productList').innerHTML=list.map(p=>`
     <div class="card">
-      <img src="${p.image || 'https://via.placeholder.com/200'}">
-      <b>${p.name}</b><br>
-      <small>${p.category||''}</small><br>
-      <b style="color:green">₹${p.price}</b>
-      <button class="btn" onclick='addToCart(${JSON.stringify(p)})'>Add to Cart</button>
-    </div>
-  `).join('');
+      <img src="${p.image||p.img||'https://via.placeholder.com/200'}">
+      <b style="font-size:13px">${p.name||p.product_name}</b><br>
+      <b style="color:#3a8a5e">₹${p.price||p.selling_price||p.mrp||'--'}</b> <small style="text-decoration:line-through;opacity:.5">₹${p.mrp||''}</small>
+      <button onclick='addToCart(${JSON.stringify(p).replace(/'/g,"")})' style="background:#3a8a5e;color:#fff;border:none;width:100%;padding:7px;border-radius:8px;margin-top:5px;font-weight:700">Add</button>
+    </div>`).join('');
 }
-
-function filterCat(cat){
-  document.querySelectorAll('.cat button').forEach(b=>b.classList.remove('active'));
-  event.target.classList.add('active');
-  if(cat=='all') showProducts(allProducts);
-  else showProducts(allProducts.filter(p=>(p.category||'').toLowerCase().includes(cat.toLowerCase()) || Math.random()>0.5));
-}
-
-function addToCart(p){ cart.push(p); localStorage.setItem('cart',JSON.stringify(cart)); updateCartCount(); alert('Added to Cart!')}
+function addToCart(p){ cart.push(p); localStorage.setItem('cart',JSON.stringify(cart)); updateCartCount(); alert('Added to Cart!') }
 function updateCartCount(){ document.getElementById('cartCount').innerText=cart.length }
-
-function showCart(){
-  if(cart.length==0) return alert('Cart Empty');
-  let total=cart.reduce((s,p)=>s+parseFloat(p.price||0),0);
-  let txt=cart.map(p=>p.name+' - ₹'+p.price).join('\n');
-  if(confirm(txt+'\n\nTotal: ₹'+total+'\n\nOrder Now?')){
-    if(!user) return showLogin();
-    fetch(API+'/orders.php',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({user_id:user.id||1,total_amount:total,items:cart})})
-    .then(r=>r.json()).then(d=>{alert('Order Success! ID: '+d.order_id); cart=[]; localStorage.setItem('cart','[]'); updateCartCount();});
-  }
-}
-
-function showLogin(){
-  let phone=prompt('Enter Phone:');
-  if(!phone) return;
-  let pass=prompt('Enter Password (or leave for new):');
-  fetch(API+'/business.php?phone='+phone).then(r=>r.json()).then(d=>{
-    if(d.status=='success'){ user=d.user; localStorage.setItem('user',JSON.stringify(user)); alert('Welcome '+user.phone); }
-    else{ alert('New user! Please Register in API'); }
-  });
-}
-function showOrders(){ alert('Order History - Coming from API: '+API+'/orders.php?user_id='+(user?.id||1)) }
-function showAccount(){ alert(user ? 'My Account\nPhone: '+user.phone : 'Please Login First'); }
-function applyCoupon(code){ alert('Coupon '+code+' Applied!'); }
-
+function filterCat(k){ if(k=='B2B') return; let f=allProducts.filter(x=>(x.category||'').toLowerCase().includes(k.toLowerCase())); showProducts(f.length?f:allProducts) }
+function searchProd(){ let q=document.getElementById('searchInput').value.toLowerCase(); showProducts(allProducts.filter(p=>(p.name||'').toLowerCase().includes(q))) }
+function showCart(){ if(cart.length==0) return alert('Cart Empty'); alert(cart.map(p=>p.name).join('\n')+'\n\nTotal Items: '+cart.length) }
+function showCat(){ document.querySelector('.category-grid').scrollIntoView({behavior:'smooth'}) }
 loadAll();
 </script>
 </body>
