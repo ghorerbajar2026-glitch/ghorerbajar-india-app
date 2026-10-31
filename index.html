@@ -1,76 +1,28 @@
-<!DOCTYPE html>
-<html lang="bn">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Ghorer Bajar India</title>
-<style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui}
-body{background:#f5f9f3;padding-bottom:80px}
-.top{background:#0f7a3a;color:#fff;padding:8px 12px 16px;border-radius:0 0 22px 22px}
-.logo{background:#fff;border-radius:14px;height:110px;display:flex;align-items:center;justify-content:center;overflow:hidden}
-.logo img{width:100%;height:110px;object-fit:contain;transform:scale(3.2)}
-.head{display:flex;justify-content:space-between;margin-top:10px;font-weight:700}
-.loc{background:#fff;color:#111;padding:6px 14px;border-radius:20px;font-size:12px;font-weight:700;display:inline-block;margin-top:8px}
-.search{background:#fff;border:2px solid #f0b429;border-radius:12px;padding:10px;display:flex;gap:6px;margin-top:10px}
-.search input{flex:1;border:none;outline:none}
-.ban{display:flex;padding:8px 0;overflow-x:auto}
-.ban-card{min-width:100%;height:200px;background:#fff;border-radius:14px;margin:0 8px;display:flex;align-items:center;justify-content:center;overflow:hidden}
-.ban-card img{width:100%;height:100%;object-fit:contain;transform:scale(3)}
-.myorder{margin:12px;background:#fff;border:2px solid #0f7a3a;border-radius:14px;padding:12px}
-.sec{padding:12px;font-weight:800;display:flex;gap:8px;align-items:center}
-.sec:after{content:'';flex:1;height:2px;background:#222}
-.cats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:0 12px}
-.c{text-align:center}.c div{width:60px;height:60px;background:#e8f5e9;border-radius:16px;margin:auto;display:flex;align-items:center;justify-content:center;font-size:26px}
-.c p{font-size:11px;font-weight:700;margin-top:4px}
-.prods{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:12px}
-.p{background:#fff;border-radius:12px;padding:10px;box-shadow:0 2px 6px #0001}
-.p-img{width:100%;height:90px;background:#f0f0f0;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:30px}
-.nav{position:fixed;bottom:0;left:0;right:0;background:#fff;display:flex;justify-content:space-around;padding:10px 0;border-top:1px solid #eee;border-radius:18px 18px 0 0}
-.nav div{text-align:center;font-size:11px;opacity:0.6}
-.nav .act{opacity:1;color:#0f7a3a;font-weight:800}
-#cartBox{display:none;position:fixed;bottom:0;left:0;right:0;background:#fff;border-radius:20px 20px 0 0;padding:16px;max-height:80vh;overflow-y:auto;z-index:999;box-shadow:0 -4px 20px #0003}
-</style>
-</head>
-<body>
-
-<div class="top">
-<div class="logo"><img src="Gemini_Generated_Image_z4udd8z4udd8z4ud.png"></div>
-<div class="head"><div><small>Deliver in</small><br><b style="font-size:22px">90 Minutes</b></div><div>Md M Hosossain</div></div>
-<div class="loc">📍 Kaliachak 3, Gopalpur</div>
-<div class="search">🔍 <input placeholder="Search Groceries"></div>
-</div>
-
-<div class="ban"><div class="ban-card"><img src="Gemini_Generated_Image_z4udd8z4udd8z4ud.png"></div></div>
-
-<div class="myorder">
-<div style="display:flex;justify-content:space-between"><b>📦 My Orders</b><span style="color:#0f7a3a;font-size:12px" onclick="openCart()">View All</span></div>
-<div style="display:flex;gap:8px;margin-top:10px">
-<div style="flex:1;background:#f0faf2;border:1px solid #c8e6c9;border-radius:10px;padding:10px;text-align:center"><div>🛒</div><b id="oc" style="font-size:11px">0 Orders</b></div>
-<div style="flex:1;background:#fff8e1;border:1px solid #ffe082;border-radius:10px;padding:10px;text-align:center" onclick="alert('Tracking Live - 90 Min Delivery')"><div>🚚</div><b style="font-size:11px">Track Order</b></div>
-<div style="flex:1;background:#e3f2fd;border-radius:10px;padding:10px;text-align:center"><div>💳</div><b style="font-size:11px">Wallet</b></div>
-</div>
-<div id="olist" style="margin-top:8px;font-size:12px;color:#666"></div>
-</div>
-
-<div class="sec">Category</div>
-<div class="cats">
-<div class="c"><div>🤝</div><p>B2B</p></div>
-<div class="c"><div>🛒</div><p>Groceries</p></div>
-<div class="c"><div>🍞</div><p>Dairy</p></div>
-<div class="c"><div>🔌</div><p>Electronics</p></div>
-<div class="c"><div>🥦</div><p>Fruits</p></div>
-<div class="c"><div>🍦</div><p>Ice Creams</p></div>
-<div class="c"><div>🍳</div><p>Kitchen</p></div>
-<div class="c"><div>🫙</div><p>Oil & Masala</p></div>
-</div>
-
-<div class="sec">Everyday Essentials</div>
-<div class="prods" id="plist"></div>
-
-<div class="nav">
-<div class="act">🏠<br>Home</div>
-<div>⊞<br>Category</div>
-<div onclick="openCart()">👜<br>Cart <b id="cc" style="background:red;color:#fff;border-radius:50%;padding:0 5px">0</b></div>
-<div>♡<br>Wishlist</div>
-</div>
+<!DOCTYPE html><html lang="bn"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Ghorer Bajar India</title><style>*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui}body{background:#f5f9f3;padding-bottom:80px}.top{background:#0f7a3a;color:#fff;padding:8px 12px 16px;border-radius:0 0 22px 22px}.logo{background:#fff;border-radius:14px;height:110px;display:flex;justify-content:center;align-items:center;overflow:hidden}.logo img{width:100%;height:110px;object-fit:contain;transform:scale(3.2)}.head{display:flex;justify-content:space-between;margin-top:10px;font-weight:700}.loc{background:#fff;color:#111;padding:6px 14px;border-radius:20px;font-size:12px;font-weight:700;display:inline-block;margin-top:8px}.search{background:#fff;border:2px solid #f0b429;border-radius:12px;padding:10px;display:flex;gap:6px;margin-top:10px}.search input{flex:1;border:none;outline:none}.ban{display:flex;padding:8px 0}.ban-card{min-width:100%;height:200px;background:#fff;border-radius:14px;margin:0 8px;overflow:hidden;display:flex;align-items:center;justify-content:center}.ban-card img{width:100%;height:100%;object-fit:contain;transform:scale(3)}.myorder{margin:12px;background:#fff;border:2px solid #0f7a3a;border-radius:14px;padding:12px}.sec{padding:12px;font-weight:800;display:flex;gap:8px;align-items:center}.sec:after{content:'';flex:1;height:2px;background:#222}.cats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:0 12px}.c{text-align:center}.c div{width:60px;height:60px;background:#e8f5e9;border-radius:16px;margin:auto;display:flex;align-items:center;justify-content:center;font-size:26px}.c p{font-size:11px;font-weight:700;margin-top:4px}.prods{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:12px}.p{background:#fff;border-radius:12px;padding:10px;box-shadow:0 2px 6px #0001}.p-img{width:100%;height:90px;background:#f0f0f0;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:30px}.nav{position:fixed;bottom:0;left:0;right:0;background:#fff;display:flex;justify-content:space-around;padding:10px 0;border-top:1px solid #eee;border-radius:18px 18px 0 0;z-index:99}.nav div{text-align:center;font-size:11px;opacity:.6}.nav .act{opacity:1;color:#0f7a3a;font-weight:800}#cartBox{display:none;position:fixed;bottom:0;left:0;right:0;background:#fff;border-radius:20px 20px 0 0;padding:16px;max-height:80vh;overflow-y:auto;z-index:999;box-shadow:0 -4px 20px #0003}</style></head><body><div class="top"><div class="logo"><img src="Gemini_Generated_Image_z4udd8z4udd8z4ud.png"></div><div class="head"><div><small>Deliver in</small><br><b style="font-size:22px">90 Minutes</b></div><div>Md M Hosossain</div></div><div class="loc">📍 Kaliachak 3, Gopalpur</div><div class="search">🔍 <input placeholder="Search Groceries"></div></div><div class="ban"><div class="ban-card"><img src="Gemini_Generated_Image_z4udd8z4udd8z4ud.png"></div></div><div class="myorder"><div style="display:flex;justify-content:space-between"><b>📦 My Orders</b><span style="color:#0f7a3a;font-size:12px" onclick="openCart()">View All</span></div><div style="display:flex;gap:8px;margin-top:10px"><div style="flex:1;background:#f0faf2;border:1px solid #c8e6c9;border-radius:10px;padding:10px;text-align:center"><div>🛒</div><b id="oc" style="font-size:11px">0 Orders</b></div><div style="flex:1;background:#fff8e1;border:1px solid #ffe082;border-radius:10px;padding:10px;text-align:center" onclick="alert('Tracking Live - 90 Min')"><div>🚚</div><b style="font-size:11px">Track Order</b></div><div style="flex:1;background:#e3f2fd;border-radius:10px;padding:10px;text-align:center"><div>💳</div><b style="font-size:11px">Wallet</b></div></div><div id="olist" style="margin-top:8px;font-size:12px;color:#666"></div></div><div class="sec">Category</div><div class="cats"><div class="c"><div>🤝</div><p>B2B</p></div><div class="c"><div>🛒</div><p>Groceries</p></div><div class="c"><div>🍞</div><p>Dairy</p></div><div class="c"><div>🔌</div><p>Electronics</p></div><div class="c"><div>🥦</div><p>Fruits</p></div><div class="c"><div>🍦</div><p>Ice Creams</p></div><div class="c"><div>🍳</div><p>Kitchen</p></div><div class="c"><div>🫙</div><p>Oil & Masala</p></div></div><div class="sec">Everyday Essentials</div><div class="prods" id="plist"></div><div class="nav"><div class="act">🏠<br>Home</div><div>⊞<br>Category</div><div onclick="openCart()">👜<br>Cart <b id="cc" style="background:red;color:#fff;border-radius:50%;padding:0 5px">0</b></div><div>♡<br>Wishlist</div></div><div id="cartBox"><div style="display:flex;justify-content:space-between"><b>🛒 My Cart</b><b onclick="closeCart()" style="font-size:20px">X</b></div><div id="citems" style="margin-top:10px"></div><div style="display:flex;justify-content:space-between;font-weight:800;margin-top:10px;border-top:1px dashed #ccc;padding-top:10px"><span>Total:</span><span id="ctotal">₹0</span></div><button style="width:100%;background:#0f7a3a;color:#fff;border:none;padding:12px;border-radius:12px;font-weight:800;margin-top:10px" onclick="placeOrder()">Place Order - 90 Min</button></div><script>
+let CART=JSON.parse(localStorage.getItem('cart')||'[]');
+let PRODS=[
+{name:'Miniket Chal 25kg',price:1150,icon:'🌾'},
+{name:'Soyabean Oil 15L',price:1950,icon:'🛢️'},
+{name:'Atta 10kg',price:450,icon:'🌾'},
+{name:'Sugar 5kg',price:250,icon:'🍚'},
+{name:'Masoor Dal 5kg',price:550,icon:'🥘'},
+{name:'Salt 5kg',price:120,icon:'🧂'},
+{name:'Chola 5kg',price:400,icon:'🥜'},
+{name:'Muri 2kg',price:180,icon:'🍿'}
+];
+function render(){
+ let h='';
+ for(let i=0;i<PRODS.length;i++){
+  let p=PRODS[i];
+  h+=`<div class="p"><div class="p-img">${p.icon}</div><b style="font-size:12px;display:block;margin-top:6px">${p.name}</b><div style="color:#0f7a3a;font-weight:800;margin:4px 0">₹${p.price}</div><button style="width:100%;background:#0f7a3a;color:#fff;border:none;padding:8px;border-radius:8px;font-weight:700" onclick="addC(${i})">Add</button></div>`;
+ }
+ document.getElementById('plist').innerHTML=h;
+}
+function addC(i){CART.push(PRODS[i]);localStorage.setItem('cart',JSON.stringify(CART));update();alert('Added to Cart');}
+function update(){document.getElementById('cc').innerText=CART.length;let o=JSON.parse(localStorage.getItem('my_orders')||'[]');document.getElementById('oc').innerText=o.length+' Orders';}
+function openCart(){document.getElementById('cartBox').style.display='block';let html='';let tot=0;if(CART.length==0){html='<div style="text-align:center;padding:20px;color:#999">Cart Empty</div>'}else{for(let i=0;i<CART.length;i++){tot+=CART[i].price;html+=`<div style="display:flex;justify-content:space-between;background:#f9f9f9;padding:8px;border-radius:8px;margin:5px 0"><span>${CART[i].name}</span><b>₹${CART[i].price} <span style="color:red" onclick="rem(${i})">X</span></b></div>`;}}document.getElementById('citems').innerHTML=html;document.getElementById('ctotal').innerText='₹'+tot;}
+function closeCart(){document.getElementById('cartBox').style.display='none';}
+function rem(i){CART.splice(i,1);localStorage.setItem('cart',JSON.stringify(CART));update();openCart();}
+function placeOrder(){if(CART.length==0){alert('Cart Empty');return;}let my=JSON.parse(localStorage.getItem('my_orders')||'[]');for(let p of CART){my.push(p);}localStorage.setItem('my_orders',JSON.stringify(my));localStorage.setItem('cart',JSON.stringify([]));CART=[];update();closeCart();alert('Order Placed - 90 Minutes Delivery');}
+render();update();
+</script></body></html>
