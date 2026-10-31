@@ -1,0 +1,22 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Admin</title><style>body{font-family:system-ui;background:#f5f9f3} .box{background:#fff;margin:12px;padding:14px;border-radius:14px} input,button{width:100%;padding:12px;margin:6px 0;border-radius:10px;border:1px solid #ddd} button{background:#0f7a3a;color:#fff;font-weight:800} .grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}</style></head><body>
+<div class="box" id="login"><h3>Login</h3><input id="u" placeholder="Username"><input id="p" type="password" placeholder="Password"><button onclick="login()">LOGIN</button></div>
+<div id="dash" style="display:none">
+<div class="box"><b id="who"></b> <button onclick="localStorage.clear();location.reload()" style="width:auto;background:red">Logout</button></div>
+<div class="box"><h3>Product Add</h3>
+<input id="pn" placeholder="Product Name">
+<input type="file" id="pf" multiple accept="image/*" style="border:2px dashed green">
+<div class="grid"><input id="sz" placeholder="Size"><input id="wt" placeholder="Weight"></div>
+<div class="grid"><input id="mrp" type="number" placeholder="MRP"><input id="sell" type="number" placeholder="Selling Price"></div>
+<div class="grid"><input id="stock" type="number" placeholder="Stock"><input id="offer" placeholder="Offer"></div>
+<input id="coupon" placeholder="Coupon Code">
+<button onclick="addP()">Add Product</button>
+<div id="list" style="margin-top:10px"></div>
+</div></div>
+<script>
+let PROD=JSON.parse(localStorage.getItem('gb_products')||'[]');
+function login(){let u=document.getElementById('u').value,p=document.getElementById('p').value;if(u=='superadmin'&&p=='123'){localStorage.setItem('gb_cur','1');document.getElementById('login').style.display='none';document.getElementById('dash').style.display='block';show()}else alert('superadmin / 123')}
+function show(){document.getElementById('who').innerText='superadmin';render()}
+function addP(){let name=document.getElementById('pn').value;if(!name)return alert('Name');let files=document.getElementById('pf').files;if(files.length==0)return alert('Photo Select');let readerPromises=[...files].map(f=>new Promise(r=>{let fr=new FileReader();fr.onload=e=>r(e.target.result);fr.readAsDataURL(f)}));Promise.all(readerPromises).then(imgs=>{let obj={id:Date.now(),name,photos:imgs,size:document.getElementById('sz').value,weight:document.getElementById('wt').value,mrp:document.getElementById('mrp').value,sell:document.getElementById('sell').value,stock:document.getElementById('stock').value,offer:document.getElementById('offer').value,coupon:document.getElementById('coupon').value};PROD.push(obj);localStorage.setItem('gb_products',JSON.stringify(PROD));alert('Added');render()})}
+function render(){document.getElementById('list').innerHTML=PROD.map((p,i)=>`<div style="border:1px solid #eee;padding:8px;border-radius:8px;margin:5px 0;display:flex;gap:6px"><img src="${p.photos[0]}" style="width:40px;height:40px;border-radius:6px"><b>${p.name}</b> ₹${p.sell} <span style="color:red" onclick="PROD.splice(${i},1);localStorage.setItem('gb_products',JSON.stringify(PROD));render()">X</span></div>`).join('')}
+if(localStorage.getItem('gb_cur')){document.getElementById('login').style.display='none';document.getElementById('dash').style.display='block';show()}
+</script></body></html>
