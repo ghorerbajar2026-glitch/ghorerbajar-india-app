@@ -1,111 +1,112 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ghorer Bajar India</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}
-body{background:#f8f9f5}
-.header-top{background:#3a8a5e;color:#fff;padding:15px 15px 25px 15px;border-radius:0 0 25px 25px;position:sticky;top:0;z-index:99}
-.top-row{display:flex;justify-content:space-between;align-items:center}
-.deliver small{opacity:.9;font-size:13px} .deliver b{font-size:28px;line-height:1}
-.location-pill{background:#fff;color:#000;padding:6px 14px;border-radius:20px;font-size:13px;font-weight:600;margin-top:8px;display:inline-flex;align-items:center;gap:5px}
-.search-box{background:#fff;border:2px solid #e8a838;border-radius:15px;padding:12px 15px;display:flex;align-items:center;gap:10px;margin-top:12px}
-.search-box input{border:none;outline:none;flex:1;font-size:16px}
-.banner-wrap{display:flex;gap:10px;overflow-x:auto;padding:15px;scroll-snap-type:x mandatory}
-.banner-card{min-width:85%;height:180px;border-radius:20px;overflow:hidden;scroll-snap-align:center;box-shadow:0 4px 15px #0002;position:relative;background:#fff}
-.banner-card img{width:100%;height:100%;object-fit:cover}
-.cat-title{display:flex;align-items:center;gap:10px;padding:15px;font-weight:700;font-size:18px}
-.cat-title:after{content:'';flex:1;height:2px;background:#222}
-.category-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;padding:0 15px}
-.cat-item{text-align:center}
-.cat-icon{width:70px;height:70px;background:#fdf6e9;border-radius:20px;display:flex;align-items:center;justify-content:center;margin:0 auto 6px;font-size:30px}
-.cat-item p{font-size:12px;font-weight:600;line-height:1.2}
-.products{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:15px}
-.card{background:#fff;border-radius:16px;padding:8px;box-shadow:0 2px 8px #0001}
-.card img{width:100%;height:110px;object-fit:cover;border-radius:12px}
-.coupon{background:linear-gradient(90deg,#ff9800,#ff6a00);color:#fff;padding:12px 15px;margin:8px 15px;border-radius:12px;display:flex;justify-content:space-between;align-items:center;font-weight:600}
-.nav{position:fixed;bottom:0;width:100%;background:#fff;display:flex;justify-content:space-around;padding:12px 0 8px 0;border-top:1px solid #eee;border-radius:20px 20px 0 0}
-.nav div{font-size:12px;text-align:center;opacity:.6} .nav div.active{opacity:1;color:#3a8a5e;font-weight:700}
+body{background:#f8faf5;padding-bottom:90px}
+.top-green{background:#4a9a6a;color:#fff;padding:14px 16px 20px 16px;border-radius:0 0 28px 28px}
+.top-first{display:flex;justify-content:space-between;align-items:flex-start}
+.deliver{line-height:1.1} .deliver small{font-size:13px;opacity:.9} .deliver h1{font-size:30px;font-weight:800;margin-top:2px}
+.user{display:flex;align-items:center;gap:8px;font-weight:600;font-size:14px}
+.avatar{width:32px;height:32px;background:#fde5a0;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#000}
+.location{margin-top:10px;background:#fff;color:#111;padding:7px 14px;border-radius:20px;display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;box-shadow:0 2px 6px #0001}
+.search{margin-top:12px;background:#fff;border:2.5px solid #f0b429;border-radius:14px;padding:12px 14px;display:flex;align-items:center;gap:10px}
+.search input{flex:1;border:none;outline:none;font-size:15px}
+.banner-slider{display:flex;gap:12px;overflow-x:auto;padding:16px;scroll-snap-type:x mandatory}
+.banner-slider::-webkit-scrollbar{display:none}
+.b-card{min-width:92%;height:165px;border-radius:20px;overflow:hidden;scroll-snap-align:center;background:#fff;box-shadow:0 5px 15px #0001;position:relative;border:1.5px solid #f5e6a0}
+.b-card img{width:100%;height:100%;object-fit:cover}
+.b-card .logo-center{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle,#fff 30%,#fef9e7)}
+.sec-head{display:flex;align-items:center;gap:12px;padding:6px 16px 12px 16px;font-weight:800;font-size:19px}
+.sec-head::after{content:'';flex:1;height:2px;background:#222}
+.cat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:0 12px}
+.c-item{text-align:center}
+.c-icon{width:68px;height:68px;background:#fef6e0;border-radius:20px;display:flex;align-items:center;justify-content:center;margin:0 auto 6px;font-size:28px;border:1px solid #f5e6a0}
+.c-item p{font-size:11.5px;font-weight:600;line-height:1.2;color:#222}
+.product-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:12px}
+.p-card{background:#fff;border-radius:16px;padding:8px;box-shadow:0 2px 10px #0000d}
+.p-card img{width:100%;height:115px;object-fit:cover;border-radius:12px;background:#f5f5f5}
+.p-card b{font-size:13px;display:block;margin-top:4px}
+.price{color:#2e7d4f;font-weight:800}
+.add{width:100%;background:#4a9a6a;color:#fff;border:none;padding:7px;border-radius:10px;margin-top:6px;font-weight:700}
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:#fff;display:flex;justify-content:space-around;padding:10px 0 12px 0;border-top:1px solid #eee;border-radius:22px 22px 0 0;box-shadow:0 -3px 15px #0001}
+.b-nav{text-align:center;font-size:11px;opacity:.5} .b-nav.active{opacity:1;color:#4a9a6a;font-weight:800}
+.coupon{background:linear-gradient(90deg,#ff9a00,#ff6d00);color:#fff;margin:10px 12px;padding:11px 14px;border-radius:12px;display:flex;justify-content:space-between;align-items:center;font-weight:700}
 </style>
 </head>
 <body>
-
-<div class="header-top">
-  <div class="top-row">
-    <div class="deliver"><small>Deliver in</small><br><b>90 Minutes</b></div>
-    <div style="display:flex;align-items:center;gap:8px;font-weight:600"><span id="userName">Md Mojayel Hos</span><div style="width:30px;height:30px;background:#fbe8a6;border-radius:50%;display:flex;align-items:center;justify-content:center">👤</div></div>
+<div class="top-green">
+  <div class="top-first">
+    <div class="deliver"><small>Deliver in</small><h1>90 Minutes</h1></div>
+    <div class="user"><span>Md Mojayel Hos</span><div class="avatar">👤</div></div>
   </div>
-  <div class="location-pill">📍 Kaliachak 3,Gopalpur</div>
-  <div class="search-box">🔍 <input type="text" placeholder='Search "Beauty"' id="searchInput" onkeyup="searchProd()"> 🎤</div>
+  <div class="location">📍 Kaliachak 3,Gopalpur</div>
+  <div class="search">🔍<input id="search" placeholder='Search &quot;Beauty&quot;' onkeyup="doSearch()"><span>🎙️</span></div>
 </div>
 
-<div class="banner-wrap" id="banner">
-  <div class="banner-card"><img src="https://i.ibb.co/3mJ5h7K/ghorer-bajar-logo.png" onerror="this.src='https://via.placeholder.com/400x180?text=Ghorer+Bajar+-+Ghore+Bose+Ghorer+Bazar'"></div>
-  <div class="banner-card"><img src="https://images.unsplash.com/photo-1608198093002-ad4e005484ec?w=800"></div>
-  <div class="banner-card"><img src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=800"></div>
+<div class="banner-slider" id="banners">
+  <div class="b-card"><div class="logo-center"><div style="text-align:center"><div style="font-size:40px">🛒</div><b style="font-size:20px;color:#c89c1a">Ghorer Bajar</b><br><small>Ghore Bose Ghorer Bazar</small></div></div></div>
+  <div class="b-card"><img src="https://images.unsplash.com/photo-1608198093002-ad4e005484ec?w=800"></div>
 </div>
 
-<div class="cat-title">Category</div>
-<div class="category-grid">
-  <div class="cat-item" onclick="filterCat('B2B')"><div class="cat-icon">🤝</div><p>B2B Marketpl...</p></div>
-  <div class="cat-item" onclick="filterCat('Groceries')"><div class="cat-icon">🛒</div><p>Groceries</p></div>
-  <div class="cat-item" onclick="filterCat('Dairy')"><div class="cat-icon">🍞</div><p>Dairy, Bread & ...</p></div>
-  <div class="cat-item" onclick="filterCat('Electronics')"><div class="cat-icon">🔌</div><p>Electronics & Applia...</p></div>
-  <div class="cat-item" onclick="filterCat('Fruits')"><div class="cat-icon">🥦</div><p>Fruits & Vegetables</p></div>
-  <div class="cat-item" onclick="filterCat('Ice')"><div class="cat-icon">🍦</div><p>Ice Creams & More</p></div>
-  <div class="cat-item" onclick="filterCat('Kitchen')"><div class="cat-icon">🍳</div><p>Kitchen & Dining</p></div>
-  <div class="cat-item" onclick="filterCat('Oil')"><div class="cat-icon">🛢️</div><p>Oil, Ghee, Masala &...</p></div>
+<div class="sec-head">Category</div>
+<div class="cat-grid">
+  <div class="c-item" onclick="filterP('b2b')"><div class="c-icon">🤝</div><p>B2B Marketpl...</p></div>
+  <div class="c-item" onclick="filterP('grocery')"><div class="c-icon">🛒</div><p>Groceries</p></div>
+  <div class="c-item" onclick="filterP('dairy')"><div class="c-icon">🥐</div><p>Dairy, Bread &...</p></div>
+  <div class="c-item" onclick="filterP('electronic')"><div class="c-icon">🔌</div><p>Electronics &...</p></div>
+  <div class="c-item" onclick="filterP('fruit')"><div class="c-icon">🥦</div><p>Fruits & Vegetables</p></div>
+  <div class="c-item" onclick="filterP('ice')"><div class="c-icon">🍦</div><p>Ice Creams & More</p></div>
+  <div class="c-item" onclick="filterP('kitchen')"><div class="c-icon">🍳</div><p>Kitchen & Dining</p></div>
+  <div class="c-item" onclick="filterP('oil')"><div class="c-icon">🫙</div><p>Oil, Ghee, Masala &...</p></div>
 </div>
 
-<div id="couponArea"></div>
+<div id="couponBox"></div>
+<div class="sec-head" style="margin-top:12px">Everyday Essentials</div>
+<div class="product-grid" id="plist">Loading products...</div>
 
-<div class="cat-title">Everyday Essentials</div>
-<div class="products" id="productList">Loading...</div>
-
-<div style="height:90px"></div>
-<div class="nav">
-  <div class="active">🏠<br>Home</div>
-  <div onclick="showCat()">⊞⊞<br>Category</div>
-  <div onclick="showCart()">👜<br>Cart <span id="cartCount" style="background:red;color:#fff;border-radius:50%;padding:0 5px">0</span></div>
-  <div>♡<br>Wishlist</div>
+<div class="bottom-nav">
+  <div class="b-nav active">🏠<br>Home</div>
+  <div class="b-nav" onclick="document.querySelector('.cat-grid').scrollIntoView({behavior:'smooth'})">⊞<br>Category</div>
+  <div class="b-nav" onclick="viewCart()">👜<br>Cart <b id="cc" style="background:red;color:#fff;border-radius:50%;padding:0 5px">0</b></div>
+  <div class="b-nav">♡<br>Wishlist</div>
 </div>
 
 <script>
 const API='https://ghorerbajar.in/api_india';
-let allProducts=[], cart=JSON.parse(localStorage.getItem('cart')||'[]');
-async function loadAll(){
-  try{
-    let c=await fetch(API+'/coupons.php').then(r=>r.json());
-    document.getElementById('couponArea').innerHTML=c.map(x=>`<div class="coupon"><span>🎁 ${x.code} - ${x.discount} OFF</span><button onclick="alert('Coupon ${x.code} Applied')" style="background:#fff;border:none;padding:6px 12px;border-radius:8px;font-weight:700">Apply</button></div>`).join('');
-  }catch(e){}
-  try{
-    let p=await fetch(API+'/products.php').then(r=>r.json());
-    allProducts=p; showProducts(p);
-    let b=await fetch(API+'/banners.php').then(r=>r.json());
-    if(b.length>0){
-      document.getElementById('banner').innerHTML = b.map(x=>`<div class="banner-card"><img src="${x.image}" onerror="this.src='https://via.placeholder.com/400x180'"></div>`).join('') + document.getElementById('banner').innerHTML;
-    }
-  }catch(e){ showProducts([{name:'Chal - Miniket 25kg',price:1150,image:'https://via.placeholder.com/200'},{name:'Tel - Soyabean 15L',price:1950,image:'https://via.placeholder.com/200'}]) }
-  updateCartCount();
+let ALL=[], CART=JSON.parse(localStorage.getItem('cart')||'[]');
+async function init(){
+ try{
+  let cb=await fetch(API+'/coupons.php').then(r=>r.json());
+  document.getElementById('couponBox').innerHTML=cb.map(c=>`<div class="coupon"><span>🎉 ${c.code} - ${c.discount}% OFF</span><button onclick="alert('Coupon ${c.code} copied')" style="background:#fff;border:none;padding:5px 12px;border-radius:8px;font-weight:700">Apply</button></div>`).join('');
+ }catch(e){}
+ try{
+  let p=await fetch(API+'/products.php').then(r=>r.json());
+  ALL=p; render(p);
+  let b=await fetch(API+'/banners.php').then(r=>r.json());
+  if(b && b.length){ document.getElementById('banners').innerHTML = b.map(x=>`<div class="b-card"><img src="${x.image}"></div>`).join('') + document.getElementById('banners').innerHTML; }
+ }catch(e){ render([{product_name:'Chal - Miniket 25kg',selling_price:1150,image:''},{product_name:'Tel Soyabean 15L',selling_price:1950,image:''}]) }
+ updateC();
 }
-function showProducts(list){
-  document.getElementById('productList').innerHTML=list.map(p=>`
-    <div class="card">
-      <img src="${p.image||p.img||'https://via.placeholder.com/200'}">
-      <b style="font-size:13px">${p.name||p.product_name}</b><br>
-      <b style="color:#3a8a5e">₹${p.price||p.selling_price||p.mrp||'--'}</b> <small style="text-decoration:line-through;opacity:.5">₹${p.mrp||''}</small>
-      <button onclick='addToCart(${JSON.stringify(p).replace(/'/g,"")})' style="background:#3a8a5e;color:#fff;border:none;width:100%;padding:7px;border-radius:8px;margin-top:5px;font-weight:700">Add</button>
-    </div>`).join('');
+function render(list){
+ document.getElementById('plist').innerHTML=list.map(p=>`
+  <div class="p-card">
+    <img src="${p.image||p.img||'https://via.placeholder.com/200?text='+encodeURIComponent(p.product_name||p.name)}">
+    <b>${(p.product_name||p.name||'Product').slice(0,30)}</b>
+    <span class="price">₹${p.selling_price||p.price||p.mrp||0}</span>
+    <button class="add" onclick='addC(${JSON.stringify(p).replace(/'/g,"")})'>Add</button>
+  </div>`).join('');
 }
-function addToCart(p){ cart.push(p); localStorage.setItem('cart',JSON.stringify(cart)); updateCartCount(); alert('Added to Cart!') }
-function updateCartCount(){ document.getElementById('cartCount').innerText=cart.length }
-function filterCat(k){ if(k=='B2B') return; let f=allProducts.filter(x=>(x.category||'').toLowerCase().includes(k.toLowerCase())); showProducts(f.length?f:allProducts) }
-function searchProd(){ let q=document.getElementById('searchInput').value.toLowerCase(); showProducts(allProducts.filter(p=>(p.name||'').toLowerCase().includes(q))) }
-function showCart(){ if(cart.length==0) return alert('Cart Empty'); alert(cart.map(p=>p.name).join('\n')+'\n\nTotal Items: '+cart.length) }
-function showCat(){ document.querySelector('.category-grid').scrollIntoView({behavior:'smooth'}) }
-loadAll();
+function addC(p){ CART.push(p); localStorage.setItem('cart',JSON.stringify(CART)); updateC(); alert('Added to Cart') }
+function updateC(){ document.getElementById('cc').innerText=CART.length }
+function filterP(k){ if(k=='b2b') return; let f=ALL.filter(x=>(x.category||'').toLowerCase().includes(k)); render(f.length?f:ALL) }
+function doSearch(){ let q=document.getElementById('search').value.toLowerCase(); render(ALL.filter(x=>(x.product_name||x.name||'').toLowerCase().includes(q))) }
+function viewCart(){ if(!CART.length) return alert('Cart empty'); alert(CART.map(x=>x.product_name||x.name).join('\n')+'\n\nTotal: '+CART.length+' items') }
+init();
 </script>
 </body>
 </html>
