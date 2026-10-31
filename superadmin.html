@@ -1,0 +1,67 @@
+<!DOCTYPE html><html lang="bn"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Super Admin - Ghorer Bajar</title><style>*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui}body{background:#f5f9f3;padding-bottom:20px}.top{background:#0f7a3a;color:#fff;padding:14px;text-align:center;font-weight:800;font-size:18px}.box{background:#fff;margin:12px;padding:14px;border-radius:14px;box-shadow:0 2px 8px #0001}input,select,button{width:100%;padding:12px;margin:6px 0;border-radius:10px;border:1px solid #ddd}button{background:#0f7a3a;color:#fff;font-weight:800;border:none;cursor:pointer}.role{display:inline-block;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700}.super{background:#ff4444;color:#fff}.admin{background:#2196f3;color:#fff}.delivery{background:#ff9800;color:#fff}.hidden{display:none}.tab{display:flex;gap:6px;margin:10px 12px}.tab div{flex:1;text-align:center;padding:10px;background:#fff;border-radius:10px;font-weight:700;cursor:pointer;border:2px solid transparent}.tab .active{border-color:#0f7a3a;color:#0f7a3a}</style></head><body>
+<div class="top">👑 Ghorer Bajar - Super Admin Panel</div>
+
+<!-- LOGIN -->
+<div id="loginBox" class="box" style="margin-top:30px">
+<h3>🔐 Login</h3>
+<p style="font-size:12px;color:#666;margin:6px 0">Default Super Admin: superadmin / superadmin123</p>
+<input id="u" placeholder="Username"><input id="p" type="password" placeholder="Password"><button onclick="login()">Login</button>
+<div style="margin-top:10px;font-size:12px;background:#f9f9f9;padding:10px;border-radius:8px">
+<b>Test Users:</b><br>Super: superadmin / superadmin123<br>Admin: admin / admin123<br>Delivery: delivery / delivery123
+</div>
+</div>
+
+<!-- DASHBOARD -->
+<div id="dash" class="hidden">
+<div class="box" style="display:flex;justify-content:space-between;align-items:center"><span>Welcome: <b id="who"></b> <span id="roleBadge"></span></span><button onclick="logout()" style="width:auto;padding:6px 12px;background:#ff4444">Logout</button></div>
+
+<div class="tab" id="tabs"></div>
+
+<!-- SUPER ADMIN ONLY -->
+<div id="superTab" class="box hidden">
+<h3>⚙️ App Settings (Super Admin Only)</h3>
+<input id="appName" placeholder="App Name"><input id="appIcon" placeholder="App Icon URL / Emoji"><input id="appColor" type="color" value="#0f7a3a"><label style="display:flex;align-items:center;gap:8px;margin:8px 0"><input type="checkbox" id="payOn" style="width:auto"> Payment Gateway ON/OFF</label><button onclick="saveConfig()">Save App Config</button>
+
+<h3 style="margin-top:20px">👥 Create Sub Admin</h3>
+<input id="newU" placeholder="New Username"><input id="newP" placeholder="New Password"><select id="newR"><option value="admin">Admin - Product Manager</option><option value="delivery">Delivery Admin - Order Only</option><option value="super">Super Admin</option></select><button onclick="createUser()" style="background:#2196f3">Create User</button>
+<div id="userList" style="margin-top:12px"></div>
+</div>
+
+<!-- ADMIN -->
+<div id="adminTab" class="box hidden">
+<h3>📦 Product Management (Admin)</h3>
+<input id="pn" placeholder="Product Name"><input id="pp" type="number" placeholder="Price"><input id="po" type="number" placeholder="Offer Price (optional)"><input id="ps" type="number" placeholder="Stock - ex: 100"><input id="pi" placeholder="Icon Emoji - ex: 🌾"><button onclick="addProduct()">Add / Update Product</button>
+<div id="prodList" style="margin-top:12px"></div>
+</div>
+
+<!-- DELIVERY -->
+<div id="deliveryTab" class="box hidden">
+<h3>🚚 Orders - Delivery Panel</h3>
+<div id="orderList"></div>
+<button onclick="clearOrders()" style="background:#ff4444;margin-top:10px">Clear All Orders</button>
+</div>
+</div>
+
+<script>
+let USERS=JSON.parse(localStorage.getItem('gb_users')||'null')||[{username:'superadmin',password:'superadmin123',role:'super'},{username:'admin',password:'admin123',role:'admin'},{username:'delivery',password:'delivery123',role:'delivery'}];
+let CONFIG=JSON.parse(localStorage.getItem('gb_config')||'{"appName":"Ghorer Bajar India","appIcon":"🌾","color":"#0f7a3a","pay":true}');
+let PRODUCTS=JSON.parse(localStorage.getItem('gb_products')||'[]');
+let ORDERS=JSON.parse(localStorage.getItem('my_orders')||'[]');
+let CUR=null;
+
+if(!localStorage.getItem('gb_users')) localStorage.setItem('gb_users',JSON.stringify(USERS));
+
+function login(){let u=document.getElementById('u').value;let p=document.getElementById('p').value;let f=USERS.find(x=>x.username==u && x.password==p);if(!f)return alert('Wrong!');CUR=f;localStorage.setItem('gb_cur',JSON.stringify(f));showDash();}
+function showDash(){let c=JSON.parse(localStorage.getItem('gb_cur')||'null');if(!c)return;CUR=c;document.getElementById('loginBox').classList.add('hidden');document.getElementById('dash').classList.remove('hidden');document.getElementById('who').innerText=c.username;document.getElementById('roleBadge').innerHTML=`<span class="role ${c.role}">${c.role.toUpperCase()}</span>`;let tabs=document.getElementById('tabs');let html='';if(c.role=='super')html+=`<div id="tSuper" class="active" onclick="openTab('super')">⚙️ Super</div>`;if(c.role=='super'||c.role=='admin')html+=`<div id="tAdmin" class="${c.role!='super'?'active':''}" onclick="openTab('admin')">📦 Products</div>`;html+=`<div id="tDelivery" class="${c.role=='delivery'?'active':''}" onclick="openTab('delivery')">🚚 Orders</div>`;tabs.innerHTML=html;if(c.role=='super')openTab('super');else if(c.role=='admin')openTab('admin');else openTab('delivery');loadAll();}
+function openTab(t){document.getElementById('superTab').classList.add('hidden');document.getElementById('adminTab').classList.add('hidden');document.getElementById('deliveryTab').classList.add('hidden');document.querySelectorAll('.tab div').forEach(d=>d.classList.remove('active'));if(t=='super'){document.getElementById('superTab').classList.remove('hidden');document.getElementById('tSuper')?.classList.add('active');}if(t=='admin'){document.getElementById('adminTab').classList.remove('hidden');document.getElementById('tAdmin')?.classList.add('active');}if(t=='delivery'){document.getElementById('deliveryTab').classList.remove('hidden');document.getElementById('tDelivery')?.classList.add('active');}}
+function loadAll(){document.getElementById('appName').value=CONFIG.appName;document.getElementById('appIcon').value=CONFIG.appIcon;document.getElementById('appColor').value=CONFIG.color;document.getElementById('payOn').checked=CONFIG.pay;let ul=document.getElementById('userList');ul.innerHTML='<h4>Users:</h4>'+USERS.map((u,i)=>`<div style="display:flex;justify-content:space-between;padding:8px;border-bottom:1px solid #eee"><span>${u.username} <span class="role ${u.role}">${u.role}</span></span><span style="color:red;cursor:pointer" onclick="delUser(${i})">X</span></div>`).join('');let pl=document.getElementById('prodList');pl.innerHTML=PRODUCTS.length?PRODUCTS.map((p,i)=>`<div style="display:flex;justify-content:space-between;padding:8px;background:#f9f9f9;margin:4px 0;border-radius:8px"><span>${p.icon} ${p.name} - ₹${p.price} ${p.offer?'(Offer ₹'+p.offer+')':''} [Stock:${p.stock||0}]</span><span style="color:red;cursor:pointer" onclick="delProd(${i})">X</span></div>`).join(''):'No Products';let ol=document.getElementById('orderList');ORDERS=JSON.parse(localStorage.getItem('my_orders')||'[]');ol.innerHTML=ORDERS.length?ORDERS.map((o,i)=>`<div style="padding:10px;border:1px solid #eee;border-radius:10px;margin:6px 0"><div style="display:flex;justify-content:space-between"><span>${o.name}</span><b>₹${o.price}</b></div><div style="display:flex;gap:6px;margin-top:6px"><select id="st${i}" style="flex:1"><option>Pending</option><option>Packed</option><option>Out for Delivery</option><option>Delivered</option></select><button onclick="updateStatus(${i})" style="flex:1;background:#ff9800;padding:6px">Update</button></div><div style="font-size:11px;color:#666" id="sts${i}">Status: ${o.status||'Pending'}</div></div>`).join(''):'No Orders';}
+function saveConfig(){CONFIG.appName=document.getElementById('appName').value;CONFIG.appIcon=document.getElementById('appIcon').value;CONFIG.color=document.getElementById('appColor').value;CONFIG.pay=document.getElementById('payOn').checked;localStorage.setItem('gb_config',JSON.stringify(CONFIG));alert('Saved! App Name: '+CONFIG.appName+' Color: '+CONFIG.color+' Payment: '+(CONFIG.pay?'ON':'OFF'));}
+function createUser(){let u=document.getElementById('newU').value;let p=document.getElementById('newP').value;let r=document.getElementById('newR').value;if(!u||!p)return alert('Username Password dao');USERS.push({username:u,password:p,role:r});localStorage.setItem('gb_users',JSON.stringify(USERS));loadAll();alert('Created '+r+': '+u);}
+function delUser(i){if(i<3 && USERS[i].username=='superadmin')return alert('Default user delete kora jabe na');if(confirm('Delete?')){USERS.splice(i,1);localStorage.setItem('gb_users',JSON.stringify(USERS));loadAll();}}
+function addProduct(){let n=document.getElementById('pn').value;let pr=document.getElementById('pp').value;let off=document.getElementById('po').value;let st=document.getElementById('ps').value;let ic=document.getElementById('pi').value||'🛒';if(!n||!pr)return alert('Name Price dao');PRODUCTS.push({name:n,price:pr,offer:off,stock:st,icon:ic});localStorage.setItem('gb_products',JSON.stringify(PRODUCTS));loadAll();document.getElementById('pn').value='';alert('Product Added');}
+function delProd(i){PRODUCTS.splice(i,1);localStorage.setItem('gb_products',JSON.stringify(PRODUCTS));loadAll();}
+function updateStatus(i){let s=document.getElementById('st'+i).value;ORDERS[i].status=s;localStorage.setItem('my_orders',JSON.stringify(ORDERS));document.getElementById('sts'+i).innerText='Status: '+s;alert('Order '+i+' -> '+s);}
+function clearOrders(){if(confirm('Clear all?')){localStorage.setItem('my_orders','[]');loadAll();}}
+function logout(){localStorage.removeItem('gb_cur');location.reload();}
+let saved=localStorage.getItem('gb_cur');if(saved)showDash();
+</script></body></html>
