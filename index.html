@@ -1,95 +1,83 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ghorer Bajar - ঘরে বসে ঘরের বাজার</title>
-<link rel="manifest" href="manifest.json">
+<title>Ghorer Bajar</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins,sans-serif}
-body{background:#f8faf5;padding-bottom:85px}
-.top{background:#4a9a6a;color:#fff;padding:10px 15px 16px;border-radius:0 0 24px 24px}
-.logo-box{background:#fff;border-radius:14px;padding:6px;display:flex;justify-content:center;margin-bottom:10px}
-.logo-box img{height:42px;object-fit:contain}
-.top-first{display:flex;justify-content:space-between;align-items:center}
-.location{background:#fff;color:#111;padding:5px 12px;border-radius:16px;font-size:12px;font-weight:600;display:inline-flex;gap:4px;margin-top:6px}
-.search{margin-top:10px;background:#fff;border:2px solid #f0b429;border-radius:12px;padding:9px 12px;display:flex;gap:8px}
+*{margin:0;padding:0;box-sizing:border-box;font-family:sans-serif}
+body{background:#f7f7f5;padding-bottom:80px}
+.top{background:#4a9a6a;color:#fff;padding:10px 14px 16px;border-radius:0 0 22px 22px}
+.logo{background:#fff;border-radius:14px;padding:8px;display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:10px}
+.logo-icon{width:42px;height:42px;background:linear-gradient(135deg,#c89c1a,#f5d76e);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px}
+.logo-text b{color:#b68a0e;font-size:18px;display:block;line-height:1}
+.logo-text small{color:#444;font-size:10px}
+.t1{display:flex;justify-content:space-between;font-size:13px;font-weight:600}
+.loc{background:#fff;color:#111;padding:5px 12px;border-radius:15px;font-size:12px;font-weight:600;display:inline-block;margin-top:6px}
+.search{background:#fff;border:2.5px solid #f0b429;border-radius:12px;padding:9px 12px;display:flex;gap:6px;margin-top:10px}
 .search input{flex:1;border:none;outline:none}
 .banners{display:flex;gap:10px;overflow-x:auto;padding:12px}
-.b-card{min-width:90%;height:140px;border-radius:16px;overflow:hidden;background:#fff;box-shadow:0 4px 10px #0001}
-.b-card img{width:100%;height:100%;object-fit:contain;background:#fff;padding:10px}
-.sec{display:flex;gap:10px;align-items:center;padding:10px 15px;font-weight:800}
-.sec:after{content:'';flex:1;height:2px;background:#222}
+.card{min-width:88%;height:140px;border-radius:16px;background:#fff;box-shadow:0 4px 10px #0001;display:flex;align-items:center;justify-content:center;flex-direction:column;border:2px solid #f5e6a0}
+.card .big{width:70px;height:70px;background:linear-gradient(135deg,#c89c1a,#f5d76e);border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:36px;margin-bottom:8px}
+.sec{padding:10px 15px;font-weight:800;display:flex;gap:10px;align-items:center}
+.sec:after{content:'';flex:1;height:2px;background:#000}
 .cats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:0 10px}
-.c{text-align:center}.c-ic{width:60px;height:60px;background:#fef6e0;border-radius:16px;margin:0 auto 4px;display:flex;align-items:center;justify-content:center;font-size:22px}
+.c{text-align:center}.c i{width:58px;height:58px;background:#fef6e0;border-radius:15px;display:flex;align-items:center;justify-content:center;margin:0 auto 4px;font-size:20px;font-style:normal}
 .c p{font-size:10px;font-weight:600}
-.products{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:10px}
+.prods{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:10px}
 .p{background:#fff;border-radius:12px;padding:6px;box-shadow:0 2px 6px #0001}
-.p img{width:100%;height:100px;border-radius:8px;object-fit:cover}
-.nav{position:fixed;bottom:0;left:0;right:0;background:#fff;display:flex;justify-content:space-around;padding:8px 0;border-radius:16px 16px 0 0;border-top:1px solid #eee}
-.nav div{font-size:11px;opacity:.6;text-align:center}.nav .active{opacity:1;color:#4a9a6a;font-weight:800}
+.nav{position:fixed;bottom:0;left:0;right:0;background:#fff;display:flex;justify-content:space-around;padding:8px 0;border-radius:14px 14px 0 0;border-top:1px solid #eee}
+.nav div{font-size:11px;text-align:center;opacity:.6}.nav .a{opacity:1;color:#4a9a6a;font-weight:800}
+.coupon{background:linear-gradient(90deg,#ff8c00,#ff6500);color:#fff;margin:8px 10px;padding:10px 12px;border-radius:10px;display:flex;justify-content:space-between;font-weight:700}
 </style>
 </head>
 <body>
 <div class="top">
-  <div class="logo-box"><img src="https://i.ibb.co/YTkS7pQW/ghorer-bajar-logo.png" onerror="this.src='https://via.placeholder.com/200x50?text=Ghorer+Bajar'" alt="Ghorer Bajar"></div>
-  <div class="top-first">
-    <div><small>Deliver in</small><br><b style="font-size:24px">90 Minutes</b></div>
-    <div style="font-size:13px;font-weight:600">Md Mojayel Hos 👤</div>
+  <div class="logo">
+    <div class="logo-icon">🛒</div>
+    <div class="logo-text"><b>Ghorer Bajar</b><small>Ghore Bose Ghorer Bazar</small></div>
   </div>
-  <div class="location">📍 Kaliachak 3, Gopalpur</div>
-  <div class="search">🔍 <input id="s" placeholder='Search &quot;Groceries&quot;' onkeyup="searchP()"> 🎙️</div>
+  <div class="t1"><div><small>Deliver in</small><br><b style="font-size:22px">90 Minutes</b></div><div>Md Mojayel Hos 👤</div></div>
+  <div class="loc">📍 Kaliachak 3, Gopalpur</div>
+  <div class="search">🔍 <input id="s" placeholder='Search "Groceries"' onkeyup="srch()"></div>
 </div>
 
-<div class="banners" id="ban">
-  <div class="b-card"><img src="https://i.ibb.co/YTkS7pQW/ghorer-bajar-logo.png" style="object-fit:contain"></div>
-  <div class="b-card"><img src="https://images.unsplash.com/photo-1608198093002-ad4e005484ec?w=600"></div>
+<div class="banners">
+  <div class="card">
+    <div class="big">🛒</div>
+    <b style="color:#b68a0e;font-size:18px">Ghorer Bajar</b>
+    <small>Ghore Bose Ghorer Bazar</small>
+  </div>
+  <div class="card" style="background:url(https://images.unsplash.com/photo-1608198093002-ad4e005484ec?w=600);background-size:cover"></div>
 </div>
 
 <div class="sec">Category</div>
 <div class="cats">
-  <div class="c"><div class="c-ic">🤝</div><p>B2B</p></div>
-  <div class="c"><div class="c-ic">🛒</div><p>Groceries</p></div>
-  <div class="c"><div class="c-ic">🍞</div><p>Dairy</p></div>
-  <div class="c"><div class="c-ic">🔌</div><p>Electronics</p></div>
-  <div class="c"><div class="c-ic">🥦</div><p>Fruits</p></div>
-  <div class="c"><div class="c-ic">🍦</div><p>Ice Creams</p></div>
-  <div class="c"><div class="c-ic">🍳</div><p>Kitchen</p></div>
-  <div class="c"><div class="c-ic">🫙</div><p>Oil & Masala</p></div>
+  <div class="c"><i>🤝</i><p>B2B</p></div><div class="c"><i>🛒</i><p>Groceries</p></div><div class="c"><i>🍞</i><p>Dairy</p></div><div class="c"><i>🔌</i><p>Electronics</p></div>
+  <div class="c"><i>🥦</i><p>Fruits</p></div><div class="c"><i>🍦</i><p>Ice Creams</p></div><div class="c"><i>🍳</i><p>Kitchen</p></div><div class="c"><i>🫙</i><p>Oil & Masala</p></div>
 </div>
 
-<div id="coupon"></div>
+<div id="cp"></div>
 <div class="sec" style="margin-top:8px">Everyday Essentials</div>
-<div class="products" id="plist">Loading...</div>
+<div class="prods" id="plist">Loading...</div>
 
 <div class="nav">
-  <div class="active">🏠<br>Home</div>
-  <div>⊞<br>Category</div>
-  <div>👜<br>Cart <b id="cc" style="background:red;color:#fff;border-radius:50%;padding:0 4px">0</b></div>
-  <div>♡<br>Wishlist</div>
+  <div class="a">🏠<br>Home</div><div>⊞<br>Category</div><div>👜<br>Cart <b id="cc" style="background:red;color:#fff;border-radius:50%;padding:0 4px">0</b></div><div>♡<br>Wishlist</div>
 </div>
 
 <script>
 const API='https://ghorerbajar.in/api_india';
 let ALL=[], CART=JSON.parse(localStorage.getItem('cart')||'[]');
-async function load(){
- try{
-  let c=await fetch(API+'/coupons.php').then(r=>r.json());
-  document.getElementById('coupon').innerHTML=c.map(x=>`<div style="background:linear-gradient(90deg,#ff9a00,#ff6d00);color:#fff;margin:8px 10px;padding:9px 12px;border-radius:10px;display:flex;justify-content:space-between;font-weight:700"><span>🎉 ${x.code}</span><span>${x.discount}% OFF</span></div>`).join('');
- }catch(e){}
- try{
-  let p=await fetch(API+'/products.php').then(r=>r.json());
-  ALL=p; show(p);
- }catch(e){ show([{product_name:'Chal Miniket 25kg',selling_price:1150},{product_name:'Soyabean Oil 15L',selling_price:1950}]) }
- upd();
+async function ld(){
+ try{ let c=await fetch(API+'/coupons.php').then(r=>r.json()); document.getElementById('cp').innerHTML=c.map(x=>`<div class=coupon><span>🎉 ${x.code}</span><span>${x.discount}% OFF</span></div>`).join('') }catch(e){}
+ try{ let p=await fetch(API+'/products.php').then(r=>r.json()); ALL=p; sh(p) }catch(e){ sh([{product_name:'Chal Miniket 25kg',selling_price:1150},{product_name:'Oil 15L',selling_price:1950}]) }
+ up()
 }
-function show(l){
- document.getElementById('plist').innerHTML=l.map(p=>`<div class="p"><img src="${p.image||'https://via.placeholder.com/200'}"><b style="font-size:12px">${(p.product_name||p.name||'Product').slice(0,26)}</b><div style="color:#2e7d4f;font-weight:800">₹${p.selling_price||p.price||0}</div><button style="width:100%;background:#4a9a6a;color:#fff;border:none;padding:5px;border-radius:7px;margin-top:4px;font-weight:700" onclick='add(${JSON.stringify(p).replace(/'/g,"")})'>Add</button></div>`).join('');
-}
-function add(p){ CART.push(p); localStorage.setItem('cart',JSON.stringify(CART)); upd(); alert('Added to Cart') }
-function upd(){ document.getElementById('cc').innerText=CART.length }
-function searchP(){ let q=document.getElementById('s').value.toLowerCase(); show(ALL.filter(x=>(x.product_name||'').toLowerCase().includes(q))) }
-load();
+function sh(l){ document.getElementById('plist').innerHTML=l.map(p=>`<div class=p><img src="${p.image||'https://via.placeholder.com/200'}" style="width:100%;height:100px;border-radius:8px;object-fit:cover"><b style="font-size:12px">${(p.product_name||'Product').slice(0,26)}</b><div style="color:#2e7d4f;font-weight:800">₹${p.selling_price||0}</div><button style="width:100%;background:#4a9a6a;color:#fff;border:none;padding:5px;border-radius:6px;margin-top:4px" onclick='ad(${JSON.stringify(p).replace(/'/g,"")})'>Add</button></div>`).join('') }
+function ad(p){ CART.push(p); localStorage.setItem('cart',JSON.stringify(CART)); up(); alert('Added') }
+function up(){ document.getElementById('cc').innerText=CART.length }
+function srch(){ let q=document.getElementById('s').value.toLowerCase(); sh(ALL.filter(x=>(x.product_name||'').toLowerCase().includes(q))) }
+ld();
 </script>
 </body>
 </html>
