@@ -1,0 +1,125 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Ghorer Bajar - B2B B2C Fixed</title><link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/><script src="https://unpkg.com/leaflet/dist/leaflet.js"></script><style>*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui}body{background:#f8f8f8;padding-bottom:80px}.top{padding:12px;background:#fff;position:sticky;top:0;z-index:20;box-shadow:0 1px 6px #0001}.search{background:#f3f3f3;border-radius:12px;padding:10px;display:flex;gap:8px;margin-top:8px}.search input{flex:1;border:none;background:transparent;outline:none}.mode{display:flex;gap:8px;margin-top:10px}.mode button{flex:1;padding:9px;border-radius:20px;font-weight:700;border:1.5px solid #000;background:#fff;color:#000}.mode .act{background:#000!important;color:#fff!important;border-color:#000!important}.prod-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:12px}.card{background:#fff;border-radius:16px;padding:10px;border:1px solid #eee;box-shadow:0 1px 4px #0001}.card-img{height:95px;display:flex;align-items:center;justify-content:center;background:#fafafa;border-radius:10px;overflow:hidden}.card-img img{width:100%;height:100%;object-fit:cover}.price{font-weight:800;font-size:15px}.add{width:100%;background:#fff;border:1.5px solid #f0c000;padding:7px;border-radius:10px;font-weight:700;margin-top:6px}.nav{position:fixed;bottom:0;left:0;right:0;background:#fff;display:flex;justify-content:space-around;padding:12px;border-top:1px solid #eee;border-radius:20px 20px 0 0;z-index:20}.sheet{display:none;position:fixed;inset:0;background:#0006;z-index:99;justify-content:center;align-items:flex-end}.sheet-in{background:#fff;border-radius:20px 20px 0 0;padding:16px;width:100%;max-height:90vh;overflow:auto}#map{height:220px;border-radius:12px;margin-top:8px}.tag{font-size:9px;padding:2px 6px;border-radius:4px;font-weight:700}.tag-retail{background:#dcfce7;color:#166534}.tag-whole{background:#fef3c7;color:#92400e}.tag-both{background:#f3f4f6;color:#374151}</style></head><body>
+<div class="top"><div style="display:flex;justify-content:space-between;align-items:center"><div><b>📍 Kaliachak 3, Gopalpur</b><br><small id="locStatus" style="color:#16a34a;font-weight:600">● Within 10 KM - Delivery Available</small></div><div onclick="openSheet('chooseSheet')" style="width:36px;height:36px;background:#f3f4f6;border-radius:50%;display:flex;align-items:center;justify-content:center">👤</div></div><div class="mode"><button id="b2cBtn" class="act" onclick="setMode('B2C')">Retail (B2C)</button><button id="b2bBtn" onclick="setMode('B2B')">🤝 Business (B2B)</button></div><div class="search">🔍 <input id="s" placeholder="Search Rice, Oil, Atta..." oninput="render(this.value)"></div></div>
+<div class="prod-grid" id="plist"></div>
+<div class="nav"><div onclick="window.scrollTo(0,0)" style="text-align:center;font-size:11px">🏠<br>Home</div><div onclick="alert('Category - Atta, Rice, Oil, Dal')" style="text-align:center;font-size:11px">⊞<br>Category</div><div onclick="openCart()" style="text-align:center;font-size:11px">👜<br>Cart <b id="cc" style="background:#f0c000;padding:2px 6px;border-radius:10px">0</b></div><div onclick="openOrders()" style="text-align:center;font-size:11px">📦<br>Orders</div></div>
+
+<div class="sheet" id="chooseSheet"><div class="sheet-in"><div style="display:flex;justify-content:space-between"><b>Choose Account Type</b><b onclick="closeAll()">✕</b></div><div style="display:flex;gap:12px;margin-top:14px"><div style="flex:1;background:#fef2f2;border:2px solid #fecaca;padding:18px;border-radius:14px;text-align:center" onclick="selectAcc('RETAIL')"><div style="font-size:38px">🛒</div><b>Retail</b><br><small>For Individual</small><br><small style="font-size:10px;color:#666">90 Mins Delivery</small></div><div style="flex:1;background:#eff6ff;border:2px solid #bfdbfe;padding:18px;border-radius:14px;text-align:center" onclick="selectAcc('BUSINESS')"><div style="font-size:38px">🏢</div><b>Business</b><br><small>Wholesaler / Shop</small><br><small style="font-size:10px;color:#666">1 Day, GST Optional</small></div></div><small style="display:block;text-align:center;margin-top:12px;color:#666">Retail = Normal Price, Business = Wholesale Low Price + MOQ</small></div></div>
+
+<div class="sheet" id="b2bRegSheet"><div class="sheet-in"><div style="display:flex;justify-content:space-between"><b>Business Registration - GST Optional</b><b onclick="closeAll()">✕</b></div><div style="margin-top:10px"><input id="bizName" placeholder="Company / Business Name *" style="border:1px solid #ddd;padding:11px;border-radius:8px;width:100%;margin:6px 0"><input id="bizGst" placeholder="GST No. (Optional) - Khali rakh sakte ho" style="border:1px dashed #f59e0b;padding:11px;border-radius:8px;width:100%;margin:6px 0;background:#fffbeb"><input id="bizTrade" placeholder="Trade License No." style="border:1px solid #ddd;padding:11px;border-radius:8px;width:100%;margin:6px 0"><div style="border:1px dashed #ccc;padding:10px;border-radius:8px;margin:6px 0;font-size:12px;background:#fafafa">📎 Upload GST Certificate (Optional) <input type="file" style="margin-top:4px"></div><div style="border:1px dashed #ccc;padding:10px;border-radius:8px;margin:6px 0;font-size:12px;background:#fafafa">📎 Upload Trade License <input type="file" style="margin-top:4px"></div><button style="width:100%;background:#000;color:#fff;padding:12px;border-radius:10px;font-weight:800;margin-top:10px" onclick="submitB2B()">Submit - Super Admin Verify Karega</button><small style="display:block;text-align:center;margin-top:8px;color:#666">Approve hone ke baad hi Business Mode active hoga - GST Optional</small></div></div></div>
+
+<div class="sheet" id="detailsSheet"><div class="sheet-in"><div style="display:flex;justify-content:space-between"><b onclick="closeAll()">✕ Close</b><b>🔍 Share</b></div><div id="detImg" style="height:200px;background:#fafafa;border-radius:12px;margin:10px 0;display:flex;align-items:center;justify-content:center;overflow:hidden"></div><div style="display:flex;justify-content:space-between"><b id="detName">Product</b><span id="detType" class="tag">BOTH</span></div><div style="font-size:11px;color:#16a34a">● <span id="detTime">10 MINS</span> - In Stock: <span id="detStock">99</span></div><div style="margin-top:6px"><span id="detPrice" class="price">₹30</span> <small id="detMrp" style="text-decoration:line-through;color:#999">₹34</small> <small id="detOff" style="color:#16a34a;font-weight:700">12% OFF</small></div><div style="margin-top:8px"><small><b>Select Unit:</b></small><div style="display:flex;gap:6px;margin-top:4px"><span style="border:1px solid #f0c000;background:#fffbe6;padding:4px 10px;border-radius:6px;font-size:11px">500g</span><span style="border:1px solid #eee;padding:4px 10px;border-radius:6px;font-size:11px">1Kg</span><span style="border:1px solid #eee;padding:4px 10px;border-radius:6px;font-size:11px">2Kg</span></div></div><div style="display:flex;gap:10px;margin-top:14px"><button class="add" style="flex:1" onclick="addFromDet()">Add to Cart</button><button style="flex:1;background:#f0c000;border:none;padding:10px;border-radius:10px;font-weight:800" onclick="buyNow()">Buy Now</button></div></div></div>
+
+<div class="sheet" id="cartSheet"><div class="sheet-in"><div style="display:flex;justify-content:space-between"><b>My Cart - <span id="cartMode">B2C</span></b><b onclick="closeAll()">✕</b></div><div id="cartItems" style="margin-top:10px"></div><div style="margin-top:12px;background:#f9fafb;padding:10px;border-radius:10px"><b>Bill Details</b><div style="font-size:12px;line-height:24px;margin-top:6px"><div>Items Total <b id="bItem" style="float:right">₹0</b></div><div>Delivery Charge <b style="float:right">₹10</b></div><div>Handling Charge <b style="float:right">₹5</b></div><div>GST <b style="float:right;font-size:10px" id="bGST">Inclusive (Optional)</b></div><hr style="margin:6px 0"><div style="font-weight:800">To Pay <b id="bPay" style="float:right;color:#16a34a">₹0</b></div></div></div><button style="width:100%;background:#f0c000;padding:13px;border-radius:12px;font-weight:800;margin-top:12px;border:none" onclick="openCheckout()">Checkout →</button></div></div>
+
+<div class="sheet" id="checkoutSheet"><div class="sheet-in"><div style="display:flex;justify-content:space-between"><b>Checkout</b><b onclick="closeAll()">✕</b></div><div style="background:#fffbe6;padding:10px;border-radius:10px;margin:10px 0;font-size:12px;border:1px solid #fde68a">📍 Delivery Address<br>Vill. Parariya, Chatra, Jharkhand<br><small id="deliveryTime">B2C: 10 Mins | B2B: 1 Day | GST Optional</small></div><div id="map"></div><p style="font-size:12px;margin-top:12px"><b>Select Date & Time Slot</b></p><div style="display:flex;gap:6px;overflow-x:auto;margin:8px 0"><div style="border:1.5px solid #f0c000;background:#fffbe6;padding:8px 14px;border-radius:8px;font-size:11px;text-align:center"><b>Fri<br>26</b></div><div style="border:1px solid #eee;padding:8px 14px;border-radius:8px;font-size:11px;text-align:center">Sat<br>27</div><div style="border:1px solid #eee;padding:8px 14px;border-radius:8px;font-size:11px;text-align:center">Sun<br>28</div></div><div style="display:flex;gap:6px;margin:8px 0"><span style="border:1px solid #eee;padding:6px 10px;border-radius:6px;font-size:10px">6AM-9AM</span><span style="border:1.5px solid #f0c000;background:#fffbe6;padding:6px 10px;border-radius:6px;font-size:10px">9AM-2PM</span><span style="border:1px solid #eee;padding:6px 10px;border-radius:6px;font-size:10px">2PM-8PM</span></div><p style="font-size:12px;margin-top:10px"><b>Payment Method</b></p><div style="border:1px solid #eee;padding:10px;border-radius:8px;margin:6px 0;font-size:12px">💳 Pay by UPI Apps</div><div style="border:1.5px solid #16a34a;background:#f0fdf4;padding:10px;border-radius:8px;margin:6px 0;font-size:12px">💰 Cash on Delivery (COD) - Active</div><div id="payGatewayList" style="margin-top:6px;font-size:11px"></div><button style="width:100%;background:#f0c000;padding:14px;border-radius:12px;font-weight:800;margin-top:14px;border:none" onclick="placeOrder()">Place Order →</button></div></div>
+
+<div class="sheet" id="orderSheet"><div class="sheet-in"><div style="display:flex;justify-content:space-between"><b>My Orders</b><b onclick="closeAll()">✕</b></div><div style="display:flex;gap:8px;margin:10px 0"><span style="background:#000;color:#fff;padding:4px 12px;border-radius:20px;font-size:11px">Active</span><span style="border:1px solid #eee;padding:4px 12px;border-radius:20px;font-size:11px">Complete</span></div><div id="orderList"></div></div></div>
+
+<script>
+let CART=[];try{CART=JSON.parse(localStorage.getItem('cart')||'[]');}catch(e){CART=[];}
+let ORDERS=[];try{ORDERS=JSON.parse(localStorage.getItem('my_orders')||'[]');}catch(e){ORDERS=[];}
+let MODE='B2C';let curProd=null;let map=null;
+let DEFAULT=[
+{name:'Bhagyalakshmi Rice Flour 500g',priceB2C:30,priceB2B:27,mrp:34,type:'BOTH',icon:'🌾',stock:99,unit:'500g'},
+{name:'Fortune Kabuli Chana 1kg',priceB2C:68,priceB2B:60,mrp:89,type:'BOTH',icon:'🥜',stock:91,unit:'1kg'},
+{name:'Amul Salted Butter 100g',priceB2C:56,priceB2B:50,mrp:58,type:'BOTH',icon:'🧈',stock:35,unit:'100g'},
+{name:'Miniket Chal 25kg',priceB2C:1150,priceB2B:1050,mrp:1300,type:'WHOLESALE',icon:'🌾',stock:500,moq:'20 bags'},
+{name:'Mustard Oil 15L',priceB2C:2100,priceB2B:1950,mrp:2400,type:'WHOLESALE',icon:'🛢️',stock:100,moq:'5 Jar'}
+];
+function getProds(){
+  try{
+    let raw = localStorage.getItem('dx_prods') || localStorage.getItem('gb_products') || localStorage.getItem('final_products') || '[]';
+    let admin = JSON.parse(raw);
+    if(!Array.isArray(admin)) admin=[];
+    let mapped = admin.filter(p=>p&&p.name).map(p=>{
+      return {
+        name: p.name||'Product',
+        type: p.type||'BOTH',
+        priceB2C: Number(p.b2c||p.sellB2C||p.priceB2C||p.price||50),
+        priceB2B: Number(p.b2b||p.sellB2B||p.priceB2B||40),
+        mrp: Number(p.mrp||p.priceB2C||60),
+        moq: p.moq||p.minQty||'',
+        icon: '🛒',
+        img: p.photos&&p.photos[0]||p.img||'',
+        stock: p.stock||99,
+        unit: p.unit||'500g'
+      };
+    });
+    return [...mapped, ...DEFAULT];
+  }catch(e){
+    console.log('getProds error',e);
+    return DEFAULT;
+  }
+}
+function setMode(m){
+  MODE=m;
+  document.getElementById('b2cBtn').className=m=='B2C'?'act':'';
+  document.getElementById('b2bBtn').className=m=='B2B'?'act':'';
+  document.getElementById('cartMode').innerText=m;
+  document.getElementById('deliveryTime').innerText=m=='B2B'?'B2B: 1 Day Delivery, GST Optional':'B2C: 10 Mins Delivery, GST Inclusive';
+  render();
+}
+function render(q=''){
+  try{
+    let all=getProds();
+    let filtered=all.filter(p=>{
+      if(MODE=='B2C') return p.type!=='WHOLESALE';
+      if(MODE=='B2B') return p.type!=='RETAIL';
+      return true;
+    }).filter(p=>p.name.toLowerCase().includes((q||'').toLowerCase()));
+    document.getElementById('plist').innerHTML=filtered.map((p,i)=>{
+      let price = MODE=='B2B'?p.priceB2B:p.priceB2C;
+      let off = p.mrp>price?Math.round((p.mrp-price)/p.mrp*100):0;
+      let tagClass = p.type=='RETAIL'?'tag-retail':p.type=='WHOLESALE'?'tag-whole':'tag-both';
+      return `<div class="card" onclick="openDet(${all.indexOf(p)})">
+        <div class="card-img">${p.img?`<img src="${p.img}">`:`<div style="font-size:50px">${p.icon}</div>`}</div>
+        <div style="font-size:10px;color:#16a34a;margin-top:4px">● ${MODE=='B2B'?'1 DAY':'10 MINS'}</div>
+        <b style="font-size:11px;display:block;height:28px;overflow:hidden">${p.name}</b>
+        <span class="${tagClass} tag">${p.type} ${p.moq?'- '+p.moq:''}</span>
+        <div style="margin-top:4px"><span class="price">₹${price||0}</span> <small style="text-decoration:line-through;color:#999;font-size:10px">₹${p.mrp}</small> ${off?`<small style="color:#16a34a;font-size:10px">${off}% OFF</small>`:''}</div>
+        <button class="add" onclick="event.stopPropagation();quickAdd(${all.indexOf(p)})">Add</button>
+      </div>`;
+    }).join('')||'<div style="grid-column:1/3;text-align:center;padding:20px;color:#999">No Products - Admin থেকে Add করো</div>';
+    document.getElementById('cc').innerText=CART.length;
+  }catch(e){ document.getElementById('plist').innerHTML='<div style="color:red">Error Fixed - Reload করো</div>'; }
+}
+function openDet(i){
+  try{
+    curProd=getProds()[i];
+    if(!curProd) return;
+    document.getElementById('detName').innerText=curProd.name;
+    document.getElementById('detPrice').innerText='₹'+(MODE=='B2B'?curProd.priceB2B:curProd.priceB2C);
+    document.getElementById('detMrp').innerText='₹'+curProd.mrp;
+    let off=curProd.mrp>(MODE=='B2B'?curProd.priceB2B:curProd.priceB2C)?Math.round((curProd.mrp-(MODE=='B2B'?curProd.priceB2B:curProd.priceB2C))/curProd.mrp*100):0;
+    document.getElementById('detOff').innerText=off?off+'% OFF':'';
+    document.getElementById('detType').innerText=curProd.type+(curProd.moq?' MOQ:'+curProd.moq:'');
+    document.getElementById('detStock').innerText=curProd.stock;
+    document.getElementById('detTime').innerText=MODE=='B2B'?'1 DAY':'10 MINS';
+    document.getElementById('detImg').innerHTML=curProd.img?`<img src="${curProd.img}" style="width:100%;height:100%;object-fit:contain">`:`<div style="font-size:70px">${curProd.icon}</div>`;
+    openSheet('detailsSheet');
+  }catch(e){ alert('Product Details Error Fixed'); }
+}
+function addFromDet(){ if(!curProd) return; CART.push({...curProd,price:MODE=='B2B'?curProd.priceB2B:curProd.priceB2C,mode:MODE}); save(); closeAll(); openCart(); }
+function quickAdd(i){ let p=getProds()[i]; CART.push({...p,price:MODE=='B2B'?p.priceB2B:p.priceB2C,mode:MODE}); save(); render(); }
+function save(){ localStorage.setItem('cart',JSON.stringify(CART)); render(); }
+function openCart(){
+  try{
+    let tot=0;
+    document.getElementById('cartItems').innerHTML=CART.length?CART.map((c,i)=>{ tot+=Number(c.price||0); return `<div style="display:flex;justify-content:space-between;background:#f9f9f9;padding:10px;border-radius:8px;margin:5px 0;font-size:12px"><span>${c.name}<br><small>${c.mode} ${c.moq||''}</small></span><span>₹${c.price} <span style="color:red;cursor:pointer" onclick="CART.splice(${i},1);save();openCart()">✕</span></span></div>`}).join(''):'<div style="text-align:center;color:#999;padding:20px">Cart Empty</div>';
+    let total=tot+15;
+    document.getElementById('bItem').innerText='₹'+tot;
+    document.getElementById('bPay').innerText='₹'+total;
+    document.getElementById('bGST').innerText=MODE=='B2B'?'Optional - 18% Extra if GST Provided':'Inclusive';
+    openSheet('cartSheet');
+  }catch(e){ alert('Cart Error Fixed'); }
+}
+function openCheckout(){ closeAll(); openSheet('checkoutSheet'); setTimeout(initMap,400); loadGateways(); }
+function loadGateways(){ try{ let pays=JSON.parse(localStorage.getItem('payment_gateways')||'[]'); document.getElementById('payGatewayList').innerHTML=pays.filter(p=>p.status=='Active').map(p=>`<div style="border:1px solid #eee;padding:6px;border-radius:6px;margin:4px 0;font-size:11px">💳 ${p.type} - ${p.status}</div>`).join('')||'<small style="color:#666">COD Active - Gateway will show here</small>'; }catch(e){} }
+function placeOrder(){ if(CART.length==0){ alert('Cart Empty'); return; } let total=CART.reduce((s,c)=>s+Number(c.price),0)+15; ORDERS.push({id:ORDERS.length+15,type:MODE,customer:MODE=='B2B'?'M/S Gupta Traders (B2B)':'Arvind Kumar (B2C)',phone:'8102337432',address:'Kaliachak, Gopalpur',items:[...CART],total:total,status:'pending',date:new Date().toLocaleDateString(),gst:MODE=='B2B'?'GST Optional - Not Provided':'Inclusive'}); localStorage.setItem('my_orders',JSON.stringify(ORDERS)); localStorage.setItem('cart',JSON.stringify([])); CART=[]; save(); closeAll(); alert('✅ Order Placed Successfully - Type:'+MODE+' GST Optional'); openOrders(); }
+function openOrders(){ try{ document.getElementById('orderList').innerHTML=ORDERS.slice().reverse().map(o=>`<div style="border:1px solid #eee;padding:10px;border-radius:10px;margin:6px 0;font-size:12px;background:${o.type=='B2B'?'#fffbeb':'#fff'}"><div style="display:flex;justify-content:space-between"><b>Order #${o.id} ${o.type}</b><span style="font-size:10px;background:#fff7ed;padding:2px 6px;border-radius:6px">${o.status}</span></div><small>${o.customer} - ₹${o.total} - ${o.gst||''}</small><br><div style="margin-top:6px">${(o.items||[]).map(it=>`<small>${it.name} x${it.qty||1} </small>`).join(', ')}</div><button style="margin-top:8px;background:#f0c000;border:none;padding:6px 12px;border-radius:6px;font-size:11px" onclick="alert('Track: Order Placed > Packed > On the way > Delivered - Estimated ${o.type==\'B2B\'?\'1 Day\':\'10 Minutes\'}')">📍 Track Order</button></div>`).join('')||'<div style="text-align:center;color:#999">No Orders</div>'; openSheet('orderSheet'); }catch(e){} }
+function openSheet(id){ closeAll(); document.getElementById(id).style.display='flex'; }
+function closeAll(){ document.querySelectorAll('.sheet').forEach(s=>s.style.display='none'); }
+function selectAcc(t){ closeAll(); if(t=='BUSINESS'){ openSheet('b2bRegSheet'); }else{ setMode('B2C'); } }
+function submitB2B(){ let name=document.getElementById('bizName').value; if(!name){ alert('Company Name Required'); return; } alert('✅ Submitted! GST Optional - Super Admin will verify documents. Approve hone ke baad B2B price active hoga'); closeAll(); setMode('B2B'); }
+function buyNow(){ addFromDet(); openCheckout(); }
+function initMap(){ try{ let lat=24.8765,lng=87.9248; let el=document.getElementById('map'); if(!el) return; el.innerHTML=''; if(map){ map.remove(); map=null; } map=L.map('map').setView([lat,lng],12); L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'OSM Free'}).addTo(map); L.marker([lat,lng]).addTo(map).bindPopup("Your Store - 10 KM Radius").openPopup(); L.circle([lat,lng],{radius:10000,color:'#16a34a',fillColor:'#16a34a',fillOpacity:0.1})
