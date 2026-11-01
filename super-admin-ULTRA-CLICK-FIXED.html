@@ -1,0 +1,108 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SUPER ADMIN ULTRA FIX</title><style>*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui}body{background:#f1f5f9;display:flex}.side{width:260px;background:#0f172a;color:#fff;position:fixed;height:100vh;overflow:auto;padding:12px;z-index:10}.side .m{padding:11px 12px;border-radius:8px;margin:4px 0;cursor:pointer;font-size:12px;color:#94a3b8}.side .act{background:#1e293b!important;color:#60a5fa!important;font-weight:700}.main{margin-left:260px;flex:1;padding:14px}.box{background:#fff;border-radius:12px;padding:16px;margin-bottom:12px;border:1px solid #e2e8f0}input,select,textarea,button{width:100%;padding:10px;border-radius:8px;border:1px solid #cbd5e1;margin:5px 0;font-size:12px}button{background:#0f172a;color:#fff;font-weight:700;cursor:pointer}textarea{min-height:60px}#map,#mapLive{height:320px;border-radius:10px;margin-top:10px;background:#e2e8f0}.modal{display:none;position:fixed;inset:0;background:#0008;z-index:99;justify-content:center;align-items:center;padding:16px}.modal-in{background:#fff;padding:16px;border-radius:12px;width:95%;max-width:600px}.img-prev{width:50px;height:50px;object-fit:cover;border-radius:6px;margin:4px;border:1px solid #eee}</style>
+<script>
+// CLICK FIX - FIRST, BEFORE ANYTHING - NO ERROR CAN BLOCK
+function showTab(t){
+  try{
+    var tabs=document.querySelectorAll('.main>div');
+    for(var i=0;i<tabs.length;i++) tabs[i].style.display='none';
+    var el=document.getElementById(t+'Tab');
+    if(el) el.style.display='block';
+    var menus=document.querySelectorAll('.side .m');
+    for(var j=0;j<menus.length;j++) menus[j].classList.remove('act');
+    var m=document.getElementById('m-'+t);
+    if(m) m.classList.add('act');
+    if(t=='dash') renderDash();
+    if(t=='order') renderOrders();
+    if(t=='cat') renderCat();
+    if(t=='prod') renderProd();
+    if(t=='b2b') renderB2B();
+    if(t=='users') renderUsers();
+    if(t=='stock') renderStock();
+    if(t=='pay') renderGate();
+    if(t=='settings') renderSettings();
+    if(t=='coupon') renderCoupon();
+    if(t=='super') renderSub();
+    if(t=='loc') loadMap();
+  }catch(e){console.log('Tab Error:',e); alert('Tab: '+t+' - Loading...');}
+}
+window.showTab=showTab;
+</script>
+</head><body>
+<div class="side">
+<div style="font-weight:800;padding:8px;color:#fff">🌾 SUPER ADMIN<br><small style="font-size:9px;color:#64748b">B2B+B2C+Payment+Live</small></div>
+<div id="m-dash" class="m act" onclick="showTab('dash')">📊 Dashboard</div>
+<div id="m-order" class="m" onclick="showTab('order')">🛒 Order + Edit + Live</div>
+<div id="m-cat" class="m" onclick="showTab('cat')">📁 Category</div>
+<div id="m-prod" class="m" onclick="showTab('prod')">📦 Product [Retail/Wholesale]</div>
+<div id="m-b2b" class="m" onclick="showTab('b2b')">🤝 B2B Approval</div>
+<div id="m-users" class="m" onclick="showTab('users')">👤 Users</div>
+<div id="m-stock" class="m" onclick="showTab('stock')">📦 Stock</div>
+<div id="m-pay" class="m" onclick="showTab('pay')">💳 Payment Gateway</div>
+<div id="m-settings" class="m" onclick="showTab('settings')">⚙️ Settings Edit</div>
+<div id="m-loc" class="m" onclick="showTab('loc')">📍 Location 10KM</div>
+<div id="m-coupon" class="m" onclick="showTab('coupon')">🎟️ Coupon</div>
+<div id="m-super" class="m" onclick="showTab('super')" style="background:#4f46e5;color:#fff!important">👑 Super Admin</div>
+<div class="m" style="background:#ef4444;color:#fff;text-align:center;margin-top:10px" onclick="localStorage.clear();location.reload()">🧹 Clear</div>
+</div>
+
+<div class="main">
+<div id="dashTab"><div class="box"><h3>Dashboard - B2B+B2C+Payment+Live</h3><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px"><div style="background:#f8fafc;padding:12px;border-radius:8px;text-align:center"><small>Total</small><br><b id="tTotal">2</b></div><div style="background:#fffbeb;padding:12px;border-radius:8px;text-align:center"><small>Pending</small><br><b id="tPend">1</b></div><div style="background:#f0fdf4;padding:12px;border-radius:8px;text-align:center"><small>Live</small><br><b>OSM FREE</b></div></div></div><div class="box"><h3>Recent Orders - Click Order Tab for Live</h3><div id="recentDash" style="margin-top:10px"></div></div></div>
+
+<div id="orderTab" style="display:none"><div class="box"><h3>Orders - Select Status + History</h3><div id="orderList"></div></div></div>
+<div id="catTab" style="display:none"><div class="box"><h3>Category</h3><input id="catName" placeholder="Category Name"><button onclick="addCat()">Add Category</button><div id="catList"></div></div></div>
+<div id="prodTab" style="display:none"><div class="box"><h3>Product - Photo + Description + Retail/Wholesale</h3><input id="pName" placeholder="Product Name"><textarea id="pDesc" placeholder="Product Description - Details"></textarea><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><select id="pType"><option value="BOTH">BOTH</option><option value="RETAIL">RETAIL</option><option value="WHOLESALE">WHOLESALE</option></select><input id="pStock" placeholder="Stock"></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><input id="pB2C" placeholder="Retail Price"><input id="pB2B" placeholder="Wholesale Price"></div><div style="background:#f8fafc;padding:10px;border-radius:8px;margin-top:8px;border:1px dashed #cbd5e1"><label style="font-size:11px;font-weight:700">📸 Product Photos (Multiple)</label><input type="file" id="pFiles" multiple accept="image/*" onchange="previewPhotos()"><div id="photoPreview" style="display:flex;flex-wrap:wrap;margin-top:8px"></div></div><button onclick="addProd()" style="background:#16a34a;margin-top:10px">+ Add Product</button><div id="prodList" style="margin-top:12px"></div></div></div>
+<div id="b2bTab" style="display:none"><div class="box"><h3>B2B Approval</h3><div id="b2bList"></div></div></div>
+<div id="usersTab" style="display:none"><div class="box"><h3>Users</h3><div id="usersList"></div></div></div>
+<div id="stockTab" style="display:none"><div class="box"><h3>Stock</h3><div id="stockList"></div></div></div>
+<div id="payTab" style="display:none"><div class="box"><h3>💳 Payment Gateway Setting</h3><div style="background:#f8fafc;padding:12px;border-radius:10px;border:1px dashed #cbd5e1"><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><select id="payType"><option value="COD">COD</option><option value="Razorpay">Razorpay</option><option value="PhonePe">PhonePe</option><option value="UPI">UPI</option></select><select id="payStatus"><option value="Active">Active</option><option value="Inactive">Inactive</option></select></div><input id="payKey" placeholder="API Key / UPI ID"><input id="paySecret" placeholder="Secret (Optional)"><button onclick="addGateway()" style="background:#16a34a">+ Add Gateway</button></div><div id="gatewayList" style="margin-top:12px"></div></div></div>
+<div id="settingsTab" style="display:none"><div class="box"><h3>Settings Edit</h3><div id="settingsList"></div></div></div>
+<div id="locTab" style="display:none"><div class="box"><h3>Location 10KM - OSM Free</h3><div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px"><input id="sLat" value="24.8765"><input id="sLng" value="87.9248"><input id="sRad" value="10"></div><button onclick="loadMap()">Save & Show Map</button><div id="map"></div><div style="margin-top:8px;background:#f0fdf4;padding:8px;border-radius:8px;font-size:11px">✅ Within 10KM: Delivery Available<br>❌ Outside: Not Available</div></div></div>
+<div id="couponTab" style="display:none"><div class="box"><h3>Coupon - B2B/B2C</h3><input id="cCode" placeholder="Code"><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><input id="cDisc" placeholder="Discount %"><select id="cFor"><option>B2C</option><option>B2B</option><option>BOTH</option></select></div><button onclick="addCoupon()">Add Coupon</button><div id="couponList"></div></div></div>
+<div id="superTab" style="display:none"><div class="box"><h3>Sub Admins</h3><input id="subU" placeholder="Username"><input id="subP" placeholder="Password"><select id="subR"><option>Admin (Store)</option><option>Delivery Admin</option></select><button onclick="addSub()">Create</button><div id="subList"></div></div></div>
+</div>
+
+<div class="modal" id="liveModal"><div class="modal-in"><b>Live Map</b><div id="mapLive"></div><div id="liveInfo" style="margin-top:8px;background:#f0fdf4;padding:8px;border-radius:8px;font-size:11px"></div><button onclick="document.getElementById('liveModal').style.display='none'" style="margin-top:8px;background:#e2e8f0;color:#000">Close</button></div></div>
+
+<script>
+var ORDERS=[{id:101,customer:'Arvind Kumar',phone:'8102337432',total:237,status:'pending',type:'B2C',address:'Paroriya',history:['Placed']},{id:102,customer:'Gupta Traders',phone:'8102337000',total:1150,status:'delivered',type:'B2B',address:'Market',history:['Placed','Delivered']}];
+var PRODS=[];var CATS=[];var COUPS=[];var GATES=[];var SUBS=[];var SETS=[];var uploadedPhotos=[];var map=null;var mapLive=null;
+try{var d=localStorage.getItem('my_orders');if(d){var p=JSON.parse(d);if(p.length>0)ORDERS=p;}}catch(e){}
+try{PRODS=JSON.parse(localStorage.getItem('dx_prods')||'[]');if(PRODS.length==0)PRODS=[{name:'Rice',type:'BOTH',b2c:30,b2b:27,stock:100,desc:'Fresh',photos:[]},{name:'Posto Dana',type:'BOTH',b2c:120,b2b:100,stock:50,desc:'Premium',photos:[]}];}catch(e){}
+try{CATS=JSON.parse(localStorage.getItem('dx_cats')||'[]');if(CATS.length==0)CATS=[{name:'Atta'},{name:'Rice'}];}catch(e){}
+try{COUPS=JSON.parse(localStorage.getItem('dx_coupons')||'[]');}catch(e){}
+try{GATES=JSON.parse(localStorage.getItem('payment_gateways')||'[]');if(GATES.length==0)GATES=[{type:'COD',status:'Active',key:'COD',secret:''}];}catch(e){}
+try{SUBS=JSON.parse(localStorage.getItem('sub_admins')||'[]');}catch(e){}
+try{SETS=JSON.parse(localStorage.getItem('app_settings')||'[]');if(SETS.length==0)SETS=[{k:'Delivery Time B2C',v:'10 minutes'},{k:'Delivery Time B2B',v:'1 Day'},{k:'Delivery Charge B2C',v:'₹10'},{k:'Min order B2C',v:'₹50'},{k:'Min order B2B',v:'₹2000'}];}catch(e){}
+
+function renderDash(){try{document.getElementById('tTotal').innerText=ORDERS.length;document.getElementById('tPend').innerText=ORDERS.filter(function(o){return o.status=='pending'}).length;var html='';for(var i=0;i<ORDERS.length;i++){var o=ORDERS[i];html+='<div style="display:flex;justify-content:space-between;padding:10px;border:1px solid #f1f5f9;border-radius:8px;margin:6px 0"><span><b>#'+o.id+'</b> '+o.customer+' - ₹'+o.total+' - '+o.status+'</span><button onclick="openLive('+i+')" style="width:auto;padding:4px 10px;background:#16a34a;border-radius:20px;font-size:11px">Live</button></div>';}document.getElementById('recentDash').innerHTML=html;}catch(e){}}
+function renderOrders(){try{var html='';for(var i=0;i<ORDERS.length;i++){var o=ORDERS[i];html+='<div style="border:1px solid #e2e8f0;border-radius:10px;padding:12px;margin:10px 0"><b>#'+o.id+' '+o.customer+'</b> - ₹'+o.total+' - '+o.status+'<br><small>'+o.phone+' | '+o.address+'</small><br><small>History: '+(o.history||[]).join(' → ')+'</small><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px;background:#f8fafc;padding:8px;border-radius:8px"><select id="status_'+i+'"><option value="pending" '+(o.status=='pending'?'selected':'')+'>Pending</option><option value="packed" '+(o.status=='packed'?'selected':'')+'>Packed</option><option value="on the way" '+(o.status=='on the way'?'selected':'')+'>On the Way</option><option value="delivered" '+(o.status=='delivered'?'selected':'')+'>Delivered</option><option value="cancelled">Cancelled</option></select><button onclick="updateStatus('+i+')" style="margin:0">Update Status</button></div><button onclick="openLive('+i+')" style="margin-top:8px;background:#16a34a">📍 Live Map</button></div>';}document.getElementById('orderList').innerHTML=html;}catch(e){}}
+function updateStatus(i){try{var ns=document.getElementById('status_'+i).value;ORDERS[i].status=ns;ORDERS[i].history=ORDERS[i].history||[];ORDERS[i].history.push(ns+' - '+new Date().toLocaleTimeString());localStorage.setItem('my_orders',JSON.stringify(ORDERS));alert('Updated: '+ns);renderOrders();renderDash();}catch(e){alert('Error: '+e.message);}}
+function previewPhotos(){try{var files=document.getElementById('pFiles').files;uploadedPhotos=[];var prev=document.getElementById('photoPreview');prev.innerHTML='';for(var i=0;i<files.length;i++){let reader=new FileReader();reader.onload=function(e){uploadedPhotos.push(e.target.result);var img=document.createElement('img');img.src=e.target.result;img.className='img-prev';document.getElementById('photoPreview').appendChild(img);};reader.readAsDataURL(files[i]);}}catch(e){}}
+function renderCat(){try{var h='';for(var i=0;i<CATS.length;i++) h+='<div style="display:flex;justify-content:space-between;padding:8px;border-bottom:1px solid #eee"><span>'+CATS[i].name+'</span><button onclick="delCat('+i+')" style="width:auto;padding:4px 8px;background:#ef4444">Del</button></div>';document.getElementById('catList').innerHTML=h;}catch(e){}}
+function addCat(){var n=document.getElementById('catName').value.trim();if(!n)return;CATS.push({name:n});localStorage.setItem('dx_cats',JSON.stringify(CATS));document.getElementById('catName').value='';renderCat();}
+function delCat(i){CATS.splice(i,1);localStorage.setItem('dx_cats',JSON.stringify(CATS));renderCat();}
+function renderProd(){try{var h='';for(var i=0;i<PRODS.length;i++){var p=PRODS[i];h+='<div style="padding:10px;border:1px solid #e2e8f0;border-radius:8px;margin:8px 0"><b>'+p.name+'</b> ['+p.type+'] ₹'+p.b2c+'/'+p.b2b+' Stock:'+p.stock+'<br><small>'+(p.desc||'')+'</small><div style="display:flex">'+((p.photos||[]).slice(0,3).map(function(ph){return '<img src="'+ph+'" class="img-prev">'}).join(''))+'</div><button onclick="delProd('+i+')" style="width:auto;padding:4px 8px;background:#fee2e2;color:#ef4444;margin-top:6px">Delete</button></div>';}document.getElementById('prodList').innerHTML=h;}catch(e){}}
+function addProd(){var n=document.getElementById('pName').value.trim();if(!n){alert('Name দাও');return;}var obj={name:n,desc:document.getElementById('pDesc').value,type:document.getElementById('pType').value,b2c:document.getElementById('pB2C').value||30,b2b:document.getElementById('pB2B').value||27,stock:document.getElementById('pStock').value||100,photos:uploadedPhotos.slice(0,3)};PRODS.push(obj);localStorage.setItem('dx_prods',JSON.stringify(PRODS));alert('Added: '+n);document.getElementById('pName').value='';document.getElementById('pDesc').value='';document.getElementById('photoPreview').innerHTML='';uploadedPhotos=[];renderProd();}
+function delProd(i){PRODS.splice(i,1);localStorage.setItem('dx_prods',JSON.stringify(PRODS));renderProd();}
+function renderB2B(){document.getElementById('b2bList').innerHTML='<div style="background:#fffbeb;border:1px solid #fde68a;padding:12px;border-radius:10px"><b>M/S Gupta Traders</b> - Pending<br><button style="width:auto;padding:6px 14px;background:#16a34a;margin-top:8px">Approve</button> <button style="width:auto;padding:6px 14px;background:#ef4444">Reject</button></div>';}
+function renderUsers(){document.getElementById('usersList').innerHTML='<div style="padding:10px;border-bottom:1px solid #eee;display:flex;justify-content:space-between"><span>Arvind Kumar - Blocked</span><button style="width:auto;padding:4px 10px;background:#16a34a">Unblock</button></div>';}
+function renderStock(){var h='';for(var i=0;i<PRODS.length;i++) h+='<div style="display:flex;justify-content:space-between;padding:10px;border-bottom:1px solid #eee"><span>'+PRODS[i].name+' - Stock:'+PRODS[i].stock+'</span><span style="color:'+(PRODS[i].stock<10?'#ef4444':'#16a34a')+'">'+(PRODS[i].stock<10?'Low':'In Stock')+'</span></div>';document.getElementById('stockList').innerHTML=h;}
+function renderGate(){var h='';for(var i=0;i<GATES.length;i++){var g=GATES[i];h+='<div style="padding:10px;border:1px solid #e2e8f0;border-radius:8px;margin:6px 0;display:flex;justify-content:space-between"><div><b>'+g.type+'</b> - '+g.key+'<br><span style="font-size:10px;background:'+(g.status=='Active'?'#dcfce7':'#fee2e2')+';padding:2px 6px;border-radius:10px">'+g.status+'</span></div><div><button onclick="toggleGate('+i+')" style="width:auto;padding:4px 8px;font-size:10px;background:'+(g.status=='Active'?'#ef4444':'#16a34a')+'">'+(g.status=='Active'?'Off':'On')+'</button> <button onclick="delGate('+i+')" style="width:auto;padding:4px 8px;background:#fee2e2;color:#ef4444;font-size:10px">Del</button></div></div>';}document.getElementById('gatewayList').innerHTML=h;}
+function addGateway(){var t=document.getElementById('payType').value;var s=document.getElementById('payStatus').value;var k=document.getElementById('payKey').value;var sec=document.getElementById('paySecret').value;GATES.push({type:t,status:s,key:k,secret:sec});localStorage.setItem('payment_gateways',JSON.stringify(GATES));renderGate();alert(t+' Added');}
+function toggleGate(i){GATES[i].status=GATES[i].status=='Active'?'Inactive':'Active';localStorage.setItem('payment_gateways',JSON.stringify(GATES));renderGate();}
+function delGate(i){GATES.splice(i,1);localStorage.setItem('payment_gateways',JSON.stringify(GATES));renderGate();}
+function renderSettings(){var h='';for(var i=0;i<SETS.length;i++){h+='<div style="display:flex;justify-content:space-between;align-items:center;padding:10px;border-bottom:1px solid #f1f5f9"><div><span>'+SETS[i].k+'</span><br><b id="setVal_'+i+'">'+SETS[i].v+'</b><input id="setInput_'+i+'" value="'+SETS[i].v+'" style="display:none;margin-top:6px"></div><div><button onclick="editSet('+i+')" id="editBtn_'+i+'" style="width:auto;padding:6px 12px;background:#e2e8f0;color:#000;font-size:11px">Edit</button><button onclick="saveSet('+i+')" id="saveBtn_'+i+'" style="width:auto;padding:6px 12px;background:#16a34a;font-size:11px;display:none">Save</button></div></div>';}document.getElementById('settingsList').innerHTML=h;}
+function editSet(i){document.getElementById('setVal_'+i).style.display='none';document.getElementById('setInput_'+i).style.display='block';document.getElementById('editBtn_'+i).style.display='none';document.getElementById('saveBtn_'+i).style.display='block';}
+function saveSet(i){var nv=document.getElementById('setInput_'+i).value;SETS[i].v=nv;localStorage.setItem('app_settings',JSON.stringify(SETS));renderSettings();alert('Saved');}
+function renderCoupon(){var h='';for(var i=0;i<COUPS.length;i++) h+='<div style="display:flex;justify-content:space-between;padding:8px;border:1px solid #eee;border-radius:8px;margin:5px 0"><span><b>'+COUPS[i].code+'</b> - '+COUPS[i].disc+'%</span><button onclick="delCoupon('+i+')" style="width:auto;padding:4px 8px;background:#ef4444">Del</button></div>';document.getElementById('couponList').innerHTML=h||'No Coupons';}
+function addCoupon(){var code=document.getElementById('cCode').value.trim();if(!code)return;COUPS.push({code:code,disc:document.getElementById('cDisc').value,for:document.getElementById('cFor').value});localStorage.setItem('dx_coupons',JSON.stringify(COUPS));renderCoupon();}
+function delCoupon(i){COUPS.splice(i,1);localStorage.setItem('dx_coupons',JSON.stringify(COUPS));renderCoupon();}
+function renderSub(){var h='';for(var i=0;i<SUBS.length;i++) h+='<div style="padding:8px;border:1px solid #eee;border-radius:8px;margin:5px 0"><b>'+SUBS[i].username+'</b> - '+SUBS[i].role+'</div>';document.getElementById('subList').innerHTML=h||'No Sub Admins';}
+function addSub(){var u=document.getElementById('subU').value.trim();if(!u){alert('Username দাও');return;}SUBS.push({username:u,role:document.getElementById('subR').value});localStorage.setItem('sub_admins',JSON.stringify(SUBS));renderSub();}
+
+function loadMap(){
+  try{
+    var sLat=document.getElementById('sLat').value||24.8765;
+    var sLng=document.getElementById('sLng').value||87.9248;
+    var box=document.getElementById('map');
+    bo
