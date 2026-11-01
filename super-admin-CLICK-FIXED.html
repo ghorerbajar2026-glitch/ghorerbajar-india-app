@@ -1,0 +1,94 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SUPER ADMIN CLICK FIXED</title><link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/><script src="https://unpkg.com/leaflet/dist/leaflet.js"></script><style>*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui}body{background:#f1f5f9;display:flex}.side{width:260px;background:#0f172a;color:#fff;position:fixed;height:100vh;overflow:auto;padding:12px}.side div{padding:11px 12px;border-radius:8px;margin:4px 0;cursor:pointer;font-size:12px;color:#94a3b8}.side .act{background:#1e293b!important;color:#60a5fa!important;font-weight:700}.main{margin-left:260px;flex:1;padding:16px}.box{background:#fff;border-radius:12px;padding:16px;margin-bottom:12px;border:1px solid #e2e8f0}.box h3{font-size:13px}input,select,button{width:100%;padding:10px;border-radius:8px;border:1px solid #cbd5e1;margin:6px 0;font-size:12px}button{background:#0f172a;color:#fff;font-weight:700;cursor:pointer}#map,#mapLive{height:340px;border-radius:10px;margin-top:10px}.modal{display:none;position:fixed;inset:0;background:#0008;z-index:99;justify-content:center;align-items:center}.modal-in{background:#fff;padding:16px;border-radius:12px;width:95%;max-width:600px}</style></head><body>
+<div class="side">
+<div style="font-weight:800;padding:8px">🌾 SUPER ADMIN</div>
+<div id="m-dash" class="act" onclick="showTab('dash')">📊 Dashboard</div>
+<div id="m-order" onclick="showTab('order')">🛒 Order + Live</div>
+<div id="m-cat" onclick="showTab('cat')">📁 Category</div>
+<div id="m-prod" onclick="showTab('prod')">📦 Product</div>
+<div id="m-b2b" onclick="showTab('b2b')">🤝 B2B Approval</div>
+<div id="m-users" onclick="showTab('users')">👤 Users</div>
+<div id="m-stock" onclick="showTab('stock')">📦 Stock</div>
+<div id="m-loc" onclick="showTab('loc')">📍 Location 10KM</div>
+<div id="m-coupon" onclick="showTab('coupon')">🎟️ Coupon</div>
+<div id="m-settings" onclick="showTab('settings')">⚙️ Settings</div>
+<div id="m-super" onclick="showTab('super')" style="background:#4f46e5;color:#fff!important">👑 Super Admin</div>
+</div>
+<div class="main">
+<div id="dashTab"><div class="box"><h3>Dashboard - B2B+B2C+Payment+Live</h3><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px"><div style="background:#f8fafc;padding:12px;border-radius:8px;text-align:center"><small>Total</small><br><b id="tTotal">2</b></div><div style="background:#fffbeb;padding:12px;border-radius:8px;text-align:center"><small>Pending</small><br><b id="tPend">1</b></div><div style="background:#f0fdf4;padding:12px;border-radius:8px;text-align:center"><small>Live</small><br><b>OSM FREE</b></div></div></div><div class="box"><h3>Recent Orders</h3><div id="recentDash"></div></div></div>
+
+<div id="orderTab" style="display:none"><div class="box"><h3>Orders - Click to Expand</h3><div id="orderList"></div></div></div>
+<div id="catTab" style="display:none"><div class="box"><h3>Category</h3><input id="catName" placeholder="Category Name"><button onclick="addCat()">Add Category</button><div id="catList"></div></div></div>
+<div id="prodTab" style="display:none"><div class="box"><h3>Product - Retail / Wholesale / Both</h3><input id="pName" placeholder="Product Name"><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><select id="pType"><option value="BOTH">BOTH</option><option value="RETAIL">RETAIL</option><option value="WHOLESALE">WHOLESALE</option></select><input id="pStock" placeholder="Stock"></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><input id="pB2C" placeholder="Retail Price"><input id="pB2B" placeholder="Wholesale Price"></div><input id="pGST" placeholder="GST % (Internal - Not Show)" type="hidden" value="18"><button onclick="addProd()" style="background:#16a34a">Add Product</button><div id="prodList"></div></div></div>
+<div id="b2bTab" style="display:none"><div class="box"><h3>B2B Approval</h3><div id="b2bList"></div></div></div>
+<div id="usersTab" style="display:none"><div class="box"><h3>Users - Block/Unblock</h3><div id="usersList"></div></div></div>
+<div id="stockTab" style="display:none"><div class="box"><h3>Stock</h3><div id="stockList"></div></div></div>
+<div id="locTab" style="display:none"><div class="box"><h3>Location 10KM - OSM Free</h3><div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px"><input id="sLat" value="24.8765"><input id="sLng" value="87.9248"><input id="sRad" value="10"></div><button onclick="initMap()">Save & Show Map</button><div id="map"></div></div></div>
+<div id="couponTab" style="display:none"><div class="box"><h3>Coupon - B2B/B2C</h3><input id="cCode" placeholder="Code"><input id="cDisc" placeholder="Discount %"><select id="cFor"><option>B2C</option><option>B2B</option><option>BOTH</option></select><button onclick="addCoupon()">Add</button><div id="couponList"></div></div></div>
+<div id="settingsTab" style="display:none"><div class="box"><h3>Settings</h3><div id="settingsList"></div></div></div>
+<div id="superTab" style="display:none"><div class="box"><h3>Sub Admins</h3><input id="subU" placeholder="Username"><input id="subP" placeholder="Password"><select id="subR"><option>Admin (Store)</option><option>Delivery Admin</option></select><button onclick="addSub()">Create Sub Admin</button><div id="subList"></div></div></div>
+</div>
+<div class="modal" id="liveModal"><div class="modal-in"><b>Live Map OSM FREE</b><div id="mapLive"></div><button onclick="document.getElementById('liveModal').style.display='none'" style="margin-top:10px">Close</button></div></div>
+<script>
+// FIXED DATA - No Undefined
+let ORDERS=[{id:101,customer:'Arvind Kumar',phone:'8102337432',total:237,status:'pending',type:'B2C',lat:24.8812,lng:87.9310,liveLat:24.8812,liveLng:87.9310,address:'Paroriya'},{id:102,customer:'Gupta Traders',phone:'8102337000',total:1150,status:'delivered',type:'B2B',lat:24.875,lng:87.92,liveLat:24.875,liveLng:87.92,address:'Market'}];
+try{let d=localStorage.getItem('my_orders');if(d){let p=JSON.parse(d);if(p.length>0&&p[0].id)ORDERS=p;}}catch(e){}
+let PRODS=JSON.parse(localStorage.getItem('dx_prods')||'[]');if(PRODS.length==0)PRODS=[{name:'Rice',type:'BOTH',b2c:30,b2b:27,stock:100},{name:'Posto Dana',type:'BOTH',b2c:120,b2b:100,stock:50}];
+let CATS=JSON.parse(localStorage.getItem('dx_cats')||'[]');if(CATS.length==0)CATS=[{name:'Atta'},{name:'Rice'}];
+let COUPS=JSON.parse(localStorage.getItem('dx_coupons')||'[]');
+let SUBS=JSON.parse(localStorage.getItem('sub_admins')||'[]');
+let map,mapLive,curLive;
+
+function showTab(t){
+ console.log('Tab:',t);
+ document.querySelectorAll('.main>div').forEach(d=>d.style.display='none');
+ let el=document.getElementById(t+'Tab');
+ if(el)el.style.display='block';
+ document.querySelectorAll('.side div').forEach(d=>d.classList.remove('act'));
+ let m=document.getElementById('m-'+t);
+ if(m)m.classList.add('act');
+ if(t=='dash')renderDash();
+ if(t=='order')renderOrders();
+ if(t=='cat')renderCat();
+ if(t=='prod')renderProd();
+ if(t=='b2b')renderB2B();
+ if(t=='users')renderUsers();
+ if(t=='stock')renderStock();
+ if(t=='coupon')renderCoupon();
+ if(t=='settings')renderSettings();
+ if(t=='super')renderSub();
+ if(t=='loc')setTimeout(initMap,400);
+}
+
+function renderDash(){
+ document.getElementById('tTotal').innerText=ORDERS.length;
+ document.getElementById('tPend').innerText=ORDERS.filter(o=>o.status=='pending').length;
+ document.getElementById('recentDash').innerHTML=ORDERS.map((o,i)=>`<div style="display:flex;justify-content:space-between;padding:10px;border:1px solid #f1f5f9;border-radius:8px;margin:6px 0"><span><b>#${o.id}</b> ${o.customer} - ₹${o.total}</span><button onclick="openLive(${i})" style="width:auto;padding:4px 10px;background:#16a34a;border-radius:20px;font-size:11px">Live</button></div>`).join('');
+}
+function renderOrders(){
+ document.getElementById('orderList').innerHTML=ORDERS.map((o,i)=>`<div style="border:1px solid #e2e8f0;border-radius:10px;padding:12px;margin:8px 0"><b>#${o.id} ${o.customer}</b> - ₹${o.total} - ${o.status}<br><small>${o.phone} | ${o.address}</small><div style="display:flex;gap:6px;margin-top:8px"><button onclick="openLive(${i})" style="background:#16a34a;font-size:11px">📍 Live Map</button><button onclick="changeStatus(${i})" style="font-size:11px">Update Status</button></div></div>`).join('');
+}
+function renderCat(){document.getElementById('catList').innerHTML=CATS.map((c,i)=>`<div style="display:flex;justify-content:space-between;padding:8px;border-bottom:1px solid #eee"><span>${c.name}</span><button onclick="delCat(${i})" style="width:auto;padding:4px 8px;background:#ef4444">Del</button></div>`).join('');}
+function addCat(){let n=document.getElementById('catName').value.trim();if(!n)return;CATS.push({name:n});localStorage.setItem('dx_cats',JSON.stringify(CATS));document.getElementById('catName').value='';renderCat();}
+function delCat(i){CATS.splice(i,1);localStorage.setItem('dx_cats',JSON.stringify(CATS));renderCat();}
+function renderProd(){document.getElementById('prodList').innerHTML=PRODS.map((p,i)=>`<div style="padding:8px;border:1px solid #f1f5f9;border-radius:8px;margin:5px 0;display:flex;justify-content:space-between"><span><b>${p.name}</b> [${p.type}] ₹${p.b2c}/${p.b2b} Stock:${p.stock}</span><button onclick="delProd(${i})" style="width:auto;padding:4px 8px;background:#fee2e2;color:#ef4444">X</button></div>`).join('');}
+function addProd(){let n=document.getElementById('pName').value.trim();if(!n){alert('Name দাও');return;}let obj={name:n,type:document.getElementById('pType').value,b2c:document.getElementById('pB2C').value||30,b2b:document.getElementById('pB2B').value||27,stock:document.getElementById('pStock').value||100,gst:18};PRODS.push(obj);localStorage.setItem('dx_prods',JSON.stringify(PRODS));renderProd();document.getElementById('pName').value='';}
+function delProd(i){PRODS.splice(i,1);localStorage.setItem('dx_prods',JSON.stringify(PRODS));renderProd();}
+// B2B Approval - GST Optional Internal Only, No Text Show
+function renderB2B(){
+ let B2BS=[{company:'M/S Gupta Traders',trade:'12345',status:'Pending'},{company:'Sharma Kirana',trade:'54321',status:'Approved'}];
+ document.getElementById('b2bList').innerHTML=B2BS.map(b=>`<div style="background:#fffbeb;border:1px solid #fde68a;padding:12px;border-radius:10px;margin:8px 0"><b>Company: ${b.company}</b><br>Trade License: ${b.trade}<br>Status: <b>${b.status}</b><div style="display:flex;gap:8px;margin-top:8px"><button style="width:auto;padding:6px 14px;background:#16a34a">Approve</button><button style="width:auto;padding:6px 14px;background:#ef4444">Reject</button></div></div>`).join('');
+}
+function renderUsers(){document.getElementById('usersList').innerHTML=`<div style="padding:10px;border-bottom:1px solid #eee;display:flex;justify-content:space-between"><span>Arvind Kumar - arvindk4901@gmail.com - Blocked</span><button style="width:auto;padding:4px 10px;background:#16a34a">Unblock</button></div><div style="padding:10px;border-bottom:1px solid #eee;display:flex;justify-content:space-between"><span>Gupta Traders B2B - 8102337432 - Active</span><button style="width:auto;padding:4px 10px;background:#ef4444">Block</button></div>`;}
+function renderStock(){document.getElementById('stockList').innerHTML=PRODS.map(p=>`<div style="padding:10px;border-bottom:1px solid #eee;display:flex;justify-content:space-between"><span>${p.name} - Stock: ${p.stock}</span><span style="color:${p.stock<10?'#ef4444':'#16a34a'}">${p.stock<10?'Low':'In Stock'}</span></div>`).join('');}
+function renderCoupon(){document.getElementById('couponList').innerHTML=COUPS.map((c,i)=>`<div style="padding:8px;border:1px solid #eee;border-radius:8px;margin:5px 0;display:flex;justify-content:space-between"><span><b>${c.code}</b> - ${c.disc}% - ${c.for}</span><button onclick="delCoupon(${i})" style="width:auto;padding:4px 8px;background:#ef4444">Del</button></div>`).join('')||'No Coupons';}
+function addCoupon(){let code=document.getElementById('cCode').value.trim();if(!code)return;COUPS.push({code,disc:document.getElementById('cDisc').value,for:document.getElementById('cFor').value});localStorage.setItem('dx_coupons',JSON.stringify(COUPS));renderCoupon();}
+function delCoupon(i){COUPS.splice(i,1);localStorage.setItem('dx_coupons',JSON.stringify(COUPS));renderCoupon();}
+function renderSettings(){document.getElementById('settingsList').innerHTML=`<div style="display:flex;justify-content:space-between;padding:10px;border-bottom:1px solid #f1f5f9"><span>Delivery Time B2C</span><b>10 minutes</b></div><div style="display:flex;justify-content:space-between;padding:10px;border-bottom:1px solid #f1f5f9"><span>Delivery Time B2B</span><b>1 Day</b></div><div style="display:flex;justify-content:space-between;padding:10px;border-bottom:1px solid #f1f5f9"><span>Delivery Charge B2C</span><b>₹10</b></div><div style="display:flex;justify-content:space-between;padding:10px;border-bottom:1px solid #f1f5f9"><span>Min order B2C</span><b>₹50</b></div><div style="display:flex;justify-content:space-between;padding:10px;border-bottom:1px solid #f1f5f9"><span>Min order B2B</span><b>₹2000</b></div>`;}
+function renderSub(){document.getElementById('subList').innerHTML=SUBS.map(s=>`<div style="padding:8px;border:1px solid #eee;border-radius:8px;margin:5px 0"><b>${s.username}</b> - ${s.role}</div>`).join('')||'No Sub Admins';}
+function addSub(){let u=document.getElementById('subU').value.trim();if(!u){alert('Username দাও');return;}SUBS.push({username:u,role:document.getElementById('subR').value});localStorage.setItem('sub_admins',JSON.stringify(SUBS));renderSub();}
+function initMap(){try{if(map){map.remove();map=null;}let lat=parseFloat(document.getElementById('sLat').value)||24.8765;let lng=parseFloat(document.getElementById('sLng').value)||87.9248;map=L.map('map').setView([lat,lng],12);L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'OSM FREE'}).addTo(map);L.marker([lat,lng]).addTo(map).bindPopup("Store").openPopup();L.circle([lat,lng],{radius:10000,color:'#16a34a',fillOpacity:0.1}).addTo(map);}catch(e){console.log(e);}}
+function openLive(i){curLive=ORDERS[i];document.getElementById('liveModal').style.display='flex';setTimeout(()=>{if(mapLive){mapLive.remove();mapLive=null;}mapLive=L.map('mapLive').setView([curLive.liveLat,curLive.liveLng],13);L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(mapLive);L.marker([24.8765,87.9248]).addTo(mapLive).bindPopup("Store");L.marker([curLive.liveLat,curLive.liveLng]).addTo(mapLive).bindPopup(curLive.customer);L.polyline([[24.8765,87.9248],[curLive.liveLat,curLive.liveLng]],{color:'#16a34a'}).addTo(mapLive);},400);}
+function changeStatus(i){let s=prompt('Status: pending, packed, delivered','pending');if(s){ORDERS[i].status=s;localStorage.setItem('my_orders',JSON.stringify(ORDERS));renderDash();renderOrders();}}
+// Auto Load
+showTab('dash');
+</script></body></html>
