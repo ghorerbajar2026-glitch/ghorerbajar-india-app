@@ -1,0 +1,91 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SUPER ADMIN V8 ULTRA</title><style>*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui}body{background:#f1f5f9;display:flex}.side{width:270px;background:#0f172a;color:#fff;position:fixed;height:100vh;overflow:auto;padding:10px}.side .m{padding:10px;border-radius:8px;margin:4px 0;cursor:pointer;color:#94a3b8;font-size:13px}.side .m.act{background:#1e293b;color:#60a5fa}.main{margin-left:270px;flex:1;padding:12px}.box{background:#fff;border-radius:10px;padding:14px;border:1px solid #e2e8f0;margin-bottom:10px}button,input,select{width:100%;padding:10px;border-radius:8px;border:1px solid #cbd5e1;margin:4px 0}button{background:#0f172a;color:#fff;font-weight:700}.mini{width:auto;padding:5px 10px;font-size:11px}</style></head><body>
+<div class="side">
+<b>🌾 SUPER ADMIN V8</b><br><small style="color:#22c55e;font-size:9px">ULTRA CLICK FIX</small>
+<div id="m-dash" class="m act" onclick="showTab('dash')">📊 Dashboard</div>
+<div id="m-order" class="m" onclick="showTab('order')">🛒 Order + Bill + Add/Cut</div>
+<div id="m-prod" class="m" onclick="showTab('prod')">📦 Product + Price + Photo</div>
+<div id="m-cat" class="m" onclick="showTab('cat')">📁 Category + Add</div>
+<div id="m-b2b" class="m" onclick="showTab('b2b')" style="background:#f59e0b;color:#fff">🤝 B2B Approval</div>
+<div id="m-pay" class="m" onclick="showTab('pay')">💳 Payment + Add</div>
+<div id="m-settings" class="m" onclick="showTab('settings')">⚙️ Settings + Add</div>
+<div id="m-users" class="m" onclick="showTab('users')">👤 Users + Block</div>
+<div id="m-stock" class="m" onclick="showTab('stock')">📦 Stock</div>
+<div id="m-coupon" class="m" onclick="showTab('coupon')">🎟️ Coupon + Add</div>
+<div id="m-loc" class="m" onclick="showTab('loc')">📍 Location 10KM</div>
+<div id="m-super" class="m" onclick="showTab('super')" style="background:#4f46e5;color:#fff">👑 Admin Create + Add</div>
+<div class="m" style="background:#ef4444;color:#fff;text-align:center" onclick="localStorage.clear();location.reload()">🧹 Clear Storage</div>
+</div>
+<div class="main">
+<div id="dashTab"><div class="box"><h3>Dashboard V8 ULTRA</h3>Total:2 Pending:1 B2B:2<br><button onclick="alert('Click OK ✅')" style="background:#16a34a;margin-top:8px">Test Click OK?</button></div></div>
+<div id="orderTab" style="display:none"><div class="box"><h3>🛒 Order - Bill Print + Add/Cut + On The Way + Live</h3><div id="orderList"></div></div></div>
+<div id="prodTab" style="display:none"><div class="box"><h3>📦 Product Full Form</h3><input id="pName" placeholder="Product Name"><input id="pB2C" placeholder="Retail B2C Price"><input id="pB2B" placeholder="Wholesale B2B Price"><input id="pStock" placeholder="Stock"><button onclick="alert('Product Added ✅')" style="background:#16a34a">+ Add Product</button><div id="prodList"></div></div></div>
+<div id="catTab" style="display:none"><div class="box"><h3>📁 Category + Add</h3><input id="catName" placeholder="Category Name"><button onclick="addCat()" style="background:#16a34a">+ Add Category</button><div id="catList" style="margin-top:8px"></div></div></div>
+<div id="b2bTab" style="display:none"><div class="box"><h3>🤝 B2B Approval List</h3><div id="b2bList"></div></div></div>
+<div id="payTab" style="display:none"><div class="box"><h3>💳 Payment Gateway + Add Form</h3><select id="payName"><option>COD</option><option>Razorpay</option><option>PhonePe</option><option>Paytm</option></select><input id="payKey" placeholder="API Key"><button onclick="alert('Gateway Saved ✅')" style="background:#16a34a">+ Save Gateway</button><div id="payList"></div></div></div>
+<div id="settingsTab" style="display:none"><div class="box"><h3>⚙️ Settings + Add Option (থাকবে)</h3><input id="newSetName" placeholder="New Setting Name"><input id="newSetVal" placeholder="Value"><button onclick="addSetting()" style="background:#4f46e5">Add Setting</button><div id="settingsList" style="margin-top:8px"></div></div></div>
+<div id="usersTab" style="display:none"><div class="box"><h3>👤 Users + Block/Unblock</h3><div id="usersList"></div></div></div>
+<div id="stockTab" style="display:none"><div class="box"><h3>📦 Stock</h3><div id="stockList"></div></div></div>
+<div id="couponTab" style="display:none"><div class="box"><h3>🎟️ Coupon + Add</h3><input id="cCode" placeholder="Code"><input id="cDisc" placeholder="Discount %"><button onclick="alert('Coupon Added ✅')" style="background:#16a34a">+ Create Coupon</button><div id="couponList"></div></div></div>
+<div id="locTab" style="display:none"><div class="box"><h3>📍 Location 10KM OSM FREE</h3><div id="mapBox" style="height:300px;background:#e2e8f0;border-radius:10px"><iframe width="100%" height="300" frameborder="0" src="https://www.openstreetmap.org/export/embed.html?bbox=87.85%2C24.82%2C88.0%2C24.92&layer=mapnik&marker=24.8765%2C87.9248"></iframe></div></div></div>
+<div id="superTab" style="display:none"><div class="box"><h3>👑 Admin Create + Add</h3><input id="aUser" placeholder="Username"><input id="aPass" placeholder="Password"><button onclick="alert('Admin Created ✅')" style="background:#4f46e5">+ Create Admin</button><div id="adminList"></div></div></div>
+</div>
+<script>
+window.showTab = function(t){
+  var all = ['dash','order','prod','cat','b2b','pay','settings','users','stock','coupon','loc','super'];
+  for(var i=0;i<all.length;i++){
+    var tab = document.getElementById(all[i]+'Tab');
+    if(tab) tab.style.display = 'none';
+    var menu = document.getElementById('m-'+all[i]);
+    if(menu) menu.classList.remove('act');
+  }
+  var cur = document.getElementById(t+'Tab');
+  if(cur) cur.style.display = 'block';
+  var curM = document.getElementById('m-'+t);
+  if(curM) curM.classList.add('act');
+  
+  if(t=='order') renderOrders();
+  if(t=='b2b') renderB2B();
+  if(t=='cat') renderCat();
+  if(t=='users') renderUsers();
+  if(t=='settings') renderSettings();
+  if(t=='stock') renderStock();
+}
+
+function renderOrders(){
+  document.getElementById('orderList').innerHTML = '<div style="border:2px solid #e2e8f0;padding:12px;border-radius:10px"><b>#101 Arvind Kumar</b> - ₹237 - pending<br>📱 8102337432 | 🏠 Paroriya<br><div style="background:#f8fafc;padding:8px;margin-top:8px;border-radius:8px">Rice 1kg x2 = ₹100 <button class="mini" style="background:#fee2e2;color:#ef4444">X Cut</button><br>Dal 500g x1 = ₹80</div><div style="margin-top:8px"><button class="mini" style="background:#dcfce7;color:#16a34a">+ Add Product</button> <button class="mini" style="background:#4f46e5">🖨️ Bill Print</button> <button class="mini" style="background:#16a34a">📍 Live Map</button></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px"><select><option>Pending</option><option>Packed</option><option>On The Way</option><option>Out for Delivery</option><option>Delivered</option></select><button>Update Status</button></div></div>';
+}
+function renderB2B(){
+  document.getElementById('b2bList').innerHTML = '<div style="border:2px solid #fde68a;background:#fffbeb;padding:12px;border-radius:10px">🏢 M/S Gupta Traders - Pending<br>👤 Rajesh Gupta | 📱 8102337000<br>GST: 19AABCG1234H1Z5<br>💳 Credit: ₹50,000<br><button style="background:#16a34a;margin-top:8px">✅ Approve B2B</button> <button style="background:#ef4444">❌ Reject</button></div>';
+}
+function renderCat(){
+  var cats = ['Atta','Rice','Dal','Oil','Posto Dana'];
+  var h=''; for(var i=0;i<cats.length;i++){ h+='<div style="padding:8px;border:1px solid #e2e8f0;border-radius:8px;margin:4px 0;display:flex;justify-content:space-between"><span>'+cats[i]+'</span><button class="mini" style="background:#fee2e2;color:#ef4444">Del</button></div>'; }
+  document.getElementById('catList').innerHTML=h;
+}
+function addCat(){
+  var n=document.getElementById('catName').value;
+  if(!n){alert('Name দাও');return;}
+  alert('Category Added ✅ '+n);
+  document.getElementById('catName').value='';
+  renderCat();
+}
+function renderUsers(){
+  document.getElementById('usersList').innerHTML = '<div style="border:1px solid #e2e8f0;padding:12px;border-radius:10px;display:flex;justify-content:space-between"><div><b>Arvind Kumar</b> - B2C<br>📱 8102337432 | 🏠 Paroriya<br><span style="background:#dcfce7;padding:2px 8px;border-radius:10px;font-size:11px">Active</span></div><div><button class="mini" style="background:#ef4444">Block</button><br><button class="mini" style="background:#e2e8f0;color:#000;margin-top:4px">View Orders</button></div></div>';
+}
+function renderSettings(){
+  document.getElementById('settingsList').innerHTML = '<div style="display:flex;justify-content:space-between;padding:10px;border-bottom:1px solid #eee"><div><small>Delivery Time B2C</small><br><b>10 minutes</b></div><button style="width:auto;background:#e2e8f0;color:#000" class="mini">Edit</button></div><div style="display:flex;justify-content:space-between;padding:10px;border-bottom:1px solid #eee"><div><small>Min Order B2B</small><br><b>₹2000</b></div><button style="width:auto;background:#e2e8f0;color:#000" class="mini">Edit</button></div>';
+}
+function addSetting(){
+  var n=document.getElementById('newSetName').value;
+  var v=document.getElementById('newSetVal').value;
+  if(!n){alert('Name দাও');return;}
+  alert('Setting Added ✅ '+n+' = '+v);
+  document.getElementById('newSetName').value='';
+  document.getElementById('newSetVal').value='';
+  renderSettings();
+}
+function renderStock(){
+  document.getElementById('stockList').innerHTML = '<div style="border:1px solid #e2e8f0;padding:10px;border-radius:8px;display:flex;justify-content:space-between"><div><b>Rice 1kg</b><br>Stock: 100 | ₹50<br><span style="background:#dcfce7;padding:2px 6px;border-radius:8px;font-size:11px">In Stock</span></div><div><input value="100" style="width:60px"><br><button class="mini" style="background:#16a34a">Update</button></div></div>';
+}
+renderOrders();renderB2B();renderCat();renderUsers();renderSettings();renderStock();
+</script></body></html>
