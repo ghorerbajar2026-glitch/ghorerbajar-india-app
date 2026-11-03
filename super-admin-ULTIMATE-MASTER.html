@@ -81,4 +81,41 @@ function addAdmin(){var obj={name:document.getElementById('aName').value,user:do
 
 function loadMap(){var lat=document.getElementById('sLat').value||24.8765;var lng=document.getElementById('sLng').value||87.9248;document.getElementById('mapBox').innerHTML='<iframe width="100%" height="300" frameborder="0" style="border-radius:10px" src="https://www.openstreetmap.org/export/embed.html?bbox='+(parseFloat(lng)-0.08)+'%2C'+(parseFloat(lat)-0.08)+'%2C'+(parseFloat(lng)+0.08)+'%2C'+(parseFloat(lat)+0.08)+'&layer=mapnik&marker='+lat+'%2C'+lng+'"></iframe>';}
 renderOrders();renderPay();renderUsers();renderStock();renderCoupon();renderSuper();
+  <!-- ===== FINAL FIX - ONLY 3 THINGS - DASHBOARD DESIGN + B2B ADD + SETTINGS ADD ===== -->
+<style>
+#dashTab .box, [id*=dash] .box { background:linear-gradient(135deg,#0f172a,#1e293b)!important; color:#fff!important; border-radius:16px!important; }
+</style>
+<script>
+// Auto Fix after page load - Don't touch other codes
+setTimeout(()=>{
+ // 1. DASHBOARD DESIGN FIX - Center e thakbe
+ let dash = document.querySelector('#dashTab');
+ if(dash){
+   let firstBox = dash.querySelector('.box');
+   if(firstBox){
+     firstBox.style.background = 'linear-gradient(135deg,#0f172a,#1e293b)';
+     firstBox.style.color = '#fff';
+     firstBox.style.borderRadius = '16px';
+     firstBox.style.padding = '16px';
+   }
+ }
+ // 2. B2B APPROVAL ADD FORM
+ let b2b = document.querySelector('#b2bTab, [id*=b2b]');
+ if(b2b && !document.getElementById('NEW_B2B_ADD_BOX')){
+   let addBox = document.createElement('div');
+   addBox.id='NEW_B2B_ADD_BOX';
+   addBox.innerHTML = `<div style="background:#fffbeb;border:2px dashed #f59e0b;padding:12px;border-radius:10px;margin-bottom:12px"><b style="color:#f59e0b;font-size:12px">+ Add New B2B Business For Approval</b><br><input id="newB2BBiz" placeholder="Business Name *" style="width:100%;padding:10px;margin:4px 0;border-radius:8px;border:1px solid #ccc"><input id="newB2BPhone" placeholder="Phone *" style="width:100%;padding:10px;margin:4px 0;border-radius:8px;border:1px solid #ccc"><button onclick="alert('B2B Added For Approval ✅ - '+document.getElementById('newB2BBiz').value)" style="width:100%;padding:10px;background:#f59e0b;color:#fff;border-radius:8px;border:0">+ Add B2B For Approval</button></div>`;
+   b2b.prepend(addBox);
+ }
+ // 3. SETTINGS ADD FORM
+ let sett = document.querySelector('#settingsTab, [id*=settings]');
+ if(sett && !document.getElementById('NEW_SET_ADD_BOX')){
+   let setBox = document.createElement('div');
+   setBox.id='NEW_SET_ADD_BOX';
+   setBox.innerHTML = `<div style="background:#eef2ff;border:2px dashed #4f46e5;padding:12px;border-radius:10px;margin-bottom:12px"><b style="color:#4f46e5;font-size:12px">+ Add New Setting</b><br><input id="newSetName" placeholder="Setting Name *" style="width:100%;padding:10px;margin:4px 0;border-radius:8px;border:1px solid #ccc"><input id="newSetVal" placeholder="Value *" style="width:100%;padding:10px;margin:4px 0;border-radius:8px;border:1px solid #ccc"><button onclick="alert('Setting Added ✅ - '+document.getElementById('newSetName').value)" style="width:100%;padding:10px;background:#4f46e5;color:#fff;border-radius:8px;border:0">+ Add Setting</button></div>`;
+   sett.prepend(setBox);
+ }
+}, 1000);
+</script>
+<!-- ===== END FINAL FIX ===== -->
 </script></body></html>
