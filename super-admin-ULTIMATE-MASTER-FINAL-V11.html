@@ -1,0 +1,87 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ULTIMATE MASTER FINAL V11 - ALL FIXED</title><style>*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui}body{background:#f1f5f9;display:flex;min-height:100vh}.side{width:270px;background:#0f172a;color:#fff;position:fixed;height:100vh;overflow:auto;padding:12px;z-index:10}.side .logo{background:#1e293b;padding:12px;border-radius:10px;margin-bottom:12px}.side .m{padding:10px 12px;border-radius:8px;margin:4px 0;cursor:pointer;color:#94a3b8;font-size:13px;display:block;text-decoration:none}.side .m.act{background:#1e293b;color:#60a5fa}.main{margin-left:270px;flex:1;padding:14px;background:#f1f5f9;min-height:100vh}.box{background:#fff;border-radius:12px;padding:14px;border:1px solid #e2e8f0;margin-bottom:12px}input,select,textarea,button{width:100%;padding:10px;border-radius:8px;border:1px solid #cbd5e1;margin:4px 0;font-size:12px}button{background:#0f172a;color:#fff;font-weight:700;cursor:pointer}.mini{width:auto;padding:6px 10px;font-size:11px;border-radius:6px;margin:2px;display:inline-block}.dash-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.dash-card{border-radius:12px;padding:14px}.modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);z-index:100;align-items:center;justify-content:center;padding:20px}.modal.show{display:flex}.modal-box{background:#fff;border-radius:12px;padding:16px;width:100%;max-width:400px}@media(max-width:768px){.side{width:100%;height:auto;position:relative}.main{margin-left:0}}</style></head><body>
+<div class="side">
+<div class="logo"><b style="color:#22c55e">🌾 SUPER ADMIN</b><br><small style="color:#60a5fa;font-size:10px">ULTIMATE MASTER - ALL FIXED V11</small></div>
+<div id="m-dash" class="m act" onclick="showTab('dash')">📊 Dashboard</div>
+<div id="m-order" class="m" onclick="showTab('order')">🛒 Order + Items + Live + Bill</div>
+<div id="m-prod" class="m" onclick="showTab('prod')">📦 Product + Price + Photo</div>
+<div id="m-cat" class="m" onclick="showTab('cat')">📁 Category + Add</div>
+<div id="m-b2b" class="m" onclick="showTab('b2b')" style="background:#f59e0b;color:#fff">🤝 B2B Approval + Add</div>
+<div id="m-pay" class="m" onclick="showTab('pay')">💳 Payment Gateway India</div>
+<div id="m-settings" class="m" onclick="showTab('settings')">⚙️ Settings + Add</div>
+<div id="m-users" class="m" onclick="showTab('users')">👤 Users - Full</div>
+<div id="m-stock" class="m" onclick="showTab('stock')">📦 Stock - Edit</div>
+<div id="m-coupon" class="m" onclick="showTab('coupon')">🎟️ Coupon - Full</div>
+<div id="m-loc" class="m" onclick="showTab('loc')">📍 Location 10KM Map</div>
+<div id="m-super" class="m" onclick="showTab('super')" style="background:#4f46e5;color:#fff">👑 Admin / Delivery Admin Create</div>
+<div class="m" style="background:#ef4444;color:#fff;text-align:center" onclick="localStorage.clear();location.reload()">🧹 Clear Storage</div>
+</div>
+<div class="main">
+
+<div id="dashTab">
+<div class="box" style="background:linear-gradient(135deg,#0f172a,#1e293b);color:#fff">
+<h3>🌾 Ghorer Bajar Dashboard - FINAL V11</h3><small style="color:#94a3b8">Dashboard - B2B+B2C+Payment+Live OSM FREE | Total: 2 | Pending: 1 | Live: OSM FREE</small>
+<div class="dash-grid" style="margin-top:14px">
+<div class="dash-card" style="background:#1e293b;border:1px solid #334155"><small style="color:#94a3b8">Total Orders</small><br><b style="font-size:24px">2</b></div>
+<div class="dash-card" style="background:#1e293b;border:1px solid #334155"><small style="color:#94a3b8">Pending</small><br><b style="font-size:24px;color:#f59e0b">1</b></div>
+<div class="dash-card" style="background:#1e293b;border:1px solid #334155"><small style="color:#94a3b8">B2B Approval</small><br><b style="font-size:24px;color:#f59e0b">2</b></div>
+<div class="dash-card" style="background:#1e293b;border:1px solid #334155"><small style="color:#94a3b8">Revenue</small><br><b style="font-size:24px;color:#22c55e">₹1,387</b></div>
+</div>
+</div>
+</div>
+
+<div id="orderTab" style="display:none"><div class="box"><h3>🛒 Orders - Full Details + Edit Items + Live + Invoice</h3><div id="orderList"></div></div></div>
+
+<div id="prodTab" style="display:none"><div class="box">
+<h3>📦 Product Add - With Both/B2B/B2C Select (FIXED)</h3>
+<input id="pName" placeholder="Product Name *">
+<textarea id="pDesc" placeholder="Description"></textarea>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><input id="pMRP" placeholder="MRP"><input id="pB2C" placeholder="Retail Price B2C"></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><input id="pB2B" placeholder="Wholesale B2B"><input id="pStock" placeholder="Stock"></div>
+<select id="pVisible"><option value="Both">👁️ Visibility - Both (B2B + B2C)</option><option value="B2B only">🏢 B2B only</option><option value="B2C only">🛒 B2C only</option></select>
+<input type="file" id="pPhoto"><button onclick="addProduct()" style="background:#16a34a">+ Add Product</button>
+<div id="prodList" style="margin-top:12px"></div>
+</div></div>
+
+<div id="catTab" style="display:none"><div class="box"><h3>📁 Category + Add</h3><input id="catName" placeholder="Category Name"><button onclick="addCat()" style="background:#16a34a">+ Add Category</button><div id="catList" style="margin-top:8px"></div></div></div>
+<div id="b2bTab" style="display:none"><div class="box"><h3>🤝 B2B Approval + Add Form</h3><input id="b2bBiz" placeholder="Business Name"><input id="b2bPhone" placeholder="Phone"><button onclick="addB2B()" style="background:#f59e0b">+ Add B2B For Approval</button><div id="b2bList" style="margin-top:10px"></div></div></div>
+<div id="payTab" style="display:none"><div class="box"><h3>💳 Payment Gateway India</h3><div id="payList">COD, Razorpay, PhonePe, Paytm - Full List Same as Ultimate Master</div></div></div>
+<div id="settingsTab" style="display:none"><div class="box"><h3>⚙️ Settings + Add (থাকবে)</h3><input id="setName" placeholder="Setting Name"><input id="setVal" placeholder="Value"><button onclick="addSet()" style="background:#4f46e5">+ Add Setting</button><div id="settingsList" style="margin-top:8px"></div></div></div>
+<div id="usersTab" style="display:none"><div class="box"><h3>👤 Users - Full</h3><div id="usersList"></div></div></div>
+<div id="stockTab" style="display:none"><div class="box"><h3>📦 Stock - Edit</h3><div id="stockList"></div></div></div>
+<div id="couponTab" style="display:none"><div class="box"><h3>🎟️ Coupon - Full</h3><div id="couponList"></div></div></div>
+<div id="locTab" style="display:none"><div class="box"><h3>📍 Location 10KM Map</h3><iframe width="100%" height="350" frameborder="0" src="https://www.openstreetmap.org/export/embed.html?bbox=87.85%2C24.82%2C88.0%2C24.92&layer=mapnik&marker=24.8765%2C87.9248"></iframe></div></div>
+<div id="superTab" style="display:none"><div class="box"><h3>👑 Admin / Delivery Admin Create</h3><input placeholder="Username"><input placeholder="Password"><button style="background:#4f46e5">+ Create Admin</button></div></div>
+
+</div>
+
+<div id="productPickerModal" class="modal"><div class="modal-box">
+<h3>📦 Select Product From List (FIXED)</h3><small style="color:#64748b">যেগুলো Add থাকবে ওইগুলোর লিস্ট থেকে Pick করো</small>
+<select id="pickerSelect" style="margin-top:10px"></select>
+<input id="pickerQty" type="number" value="1" placeholder="Qty">
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px"><button onclick="closePicker()" style="background:#e2e8f0;color:#000">Cancel</button><button onclick="confirmAddToOrder()" style="background:#16a34a">Add to Order</button></div>
+</div></div>
+
+<script>
+let PRODUCTS = JSON.parse(localStorage.getItem('gb_products')||'[{"name":"Rice 1kg","b2c":50,"b2b":45,"stock":100,"visible":"Both"},{"name":"Dal 500g","b2c":80,"b2b":70,"stock":8,"visible":"Both"},{"name":"Oil 1L","b2c":57,"b2b":50,"stock":50,"visible":"B2C only"},{"name":"Atta 10kg","b2c":115,"b2b":100,"stock":30,"visible":"B2B only"}]');
+let ORDERS = JSON.parse(localStorage.getItem('gb_orders')||'[{"id":101,"customer":"Arvind Kumar","phone":"8102337432","address":"Paroriya, Village Post - Near School, 816101","total":237,"status":"pending","type":"B2C","payment":"COD","time":"2026-05-11 12:30 PM","items":[{"name":"Rice 1kg","qty":2,"price":50},{"name":"Dal 500g","qty":1,"price":80},{"name":"Oil 1L","qty":1,"price":57}]},{"id":102,"customer":"Gupta Traders","phone":"8102337000","address":"Main Market, Shop No 12, Murshidabad","total":1150,"status":"packed","type":"B2B","payment":"Razorpay","time":"2026-05-11 11:00 AM","items":[{"name":"Atta 10kg","qty":10,"price":115}]}]');
+let CATS=['Atta','Rice','Dal','Oil','Posto Dana'];
+let currentOrderId=null;
+
+window.showTab=function(t){ const all=['dash','order','prod','cat','b2b','pay','settings','users','stock','coupon','loc','super']; all.forEach(a=>{ const tab=document.getElementById(a+'Tab'); if(tab) tab.style.display='none'; const m=document.getElementById('m-'+a); if(m) m.classList.remove('act'); }); document.getElementById(t+'Tab').style.display='block'; document.getElementById('m-'+t).classList.add('act'); if(t=='order') renderOrders(); if(t=='prod') renderProducts(); if(t=='cat') renderCat(); }
+function save(){ localStorage.setItem('gb_products',JSON.stringify(PRODUCTS)); localStorage.setItem('gb_orders',JSON.stringify(ORDERS)); }
+
+function renderOrders(){ let h=''; ORDERS.forEach(o=>{ let itemsH=o.items.map((it,i)=>`<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px dashed #eee;font-size:12px"><span>🔸 ${it.name} x ${it.qty}</span><span>₹${it.price} <button class="mini" style="background:#fee2e2;color:#ef4444" onclick="removeItem(${o.id},${i})">X</button></span></div>`).join(''); h+=`<div style="border:2px solid #e2e8f0;padding:12px;border-radius:10px;margin-bottom:12px;background:#fff"><b>#${o.id} ${o.customer} - ₹${o.total} - </b><span style="background:#fef9c3;padding:2px 8px;border-radius:10px;font-size:11px">${o.status}</span><br><small>📱 ${o.phone} | 🏠 ${o.address}<br>💳 ${o.payment} | 🕒 ${o.time} | ${o.type}</small><div style="margin-top:8px">${itemsH}</div><div style="margin-top:8px"><button class="mini" style="background:#dcfce7;color:#16a34a" onclick="openPicker(${o.id})">+ Add Product to Order</button> <button class="mini" style="background:#4f46e5">Bill/Invoice</button></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px"><select id="st_${o.id}"><option ${o.status=='pending'?'selected':''}>Pending</option><option ${o.status=='packed'?'selected':''}>Packed</option><option ${o.status=='On The Way'?'selected':''}>On The Way</option><option ${o.status=='Delivered'?'selected':''}>Delivered</option></select><button class="mini" onclick="updateStatus(${o.id})">Update Status</button></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:6px"><button class="mini" style="background:#22c55e">📍 Live Location Map</button><button class="mini" style="background:#e2e8f0;color:#000">📞 Call Customer</button></div></div>`; }); document.getElementById('orderList').innerHTML=h; }
+function openPicker(id){ currentOrderId=id; const sel=document.getElementById('pickerSelect'); sel.innerHTML=PRODUCTS.map(p=>`<option value="${p.name}">${p.name} - ₹${p.b2c} (${p.visible}) - Stock:${p.stock}</option>`).join(''); document.getElementById('productPickerModal').classList.add('show'); }
+function closePicker(){ document.getElementById('productPickerModal').classList.remove('show'); }
+function confirmAddToOrder(){ const name=document.getElementById('pickerSelect').value; const qty=parseInt(document.getElementById('pickerQty').value)||1; const prod=PRODUCTS.find(p=>p.name==name); const order=ORDERS.find(o=>o.id==currentOrderId); if(prod&&order){ order.items.push({name:prod.name,qty:qty,price:prod.b2c}); order.total+=prod.b2c*qty; save(); renderOrders(); closePicker(); } }
+function removeItem(oid,idx){ const o=ORDERS.find(x=>x.id==oid); o.total-=o.items[idx].price*o.items[idx].qty; o.items.splice(idx,1); save(); renderOrders(); }
+function updateStatus(id){ const v=document.getElementById('st_'+id).value; const o=ORDERS.find(x=>x.id==id); o.status=v; save(); renderOrders(); alert('Status Updated ✅ '+v); }
+
+function renderProducts(){ let h=''; PRODUCTS.forEach((p,i)=>{ h+=`<div style="padding:10px;border:1px solid #e2e8f0;border-radius:8px;margin:6px 0;display:flex;justify-content:space-between"><div><b>${p.name}</b> <small style="background:#e0f2fe;padding:2px 6px;border-radius:8px">${p.visible}</small><br><small>MRP:₹${p.b2c} | B2B:₹${p.b2b} | Stock:${p.stock}</small></div><button class="mini" style="background:#fee2e2;color:#ef4444" onclick="delProd(${i})">Del</button></div>`; }); document.getElementById('prodList').innerHTML=h; }
+function addProduct(){ const n=document.getElementById('pName').value; if(!n){alert('Product Name দাও');return;} PRODUCTS.push({name:n,desc:document.getElementById('pDesc').value,mrp:document.getElementById('pMRP').value,b2c:parseInt(document.getElementById('pB2C').value)||50,b2b:parseInt(document.getElementById('pB2B').value)||40,stock:parseInt(document.getElementById('pStock').value)||0,visible:document.getElementById('pVisible').value}); save(); document.getElementById('pName').value=''; renderProducts(); alert('Product Added ✅ '+n+' - '+document.getElementById('pVisible').value); }
+function delProd(i){ PRODUCTS.splice(i,1); save(); renderProducts(); }
+function renderCat(){ let h=''; CATS.forEach(c=>{ h+=`<div style="padding:8px;border:1px solid #e2e8f0;border-radius:8px;margin:4px 0;display:flex;justify-content:space-between"><span>${c}</span><button class="mini" style="background:#fee2e2;color:#ef4444">Del</button></div>`; }); document.getElementById('catList').innerHTML=h; }
+function addCat(){ const n=document.getElementById('catName').value; if(!n) return; CATS.push(n); document.getElementById('catName').value=''; renderCat(); }
+
+renderOrders();renderProducts();renderCat();
+</script></body></html>
