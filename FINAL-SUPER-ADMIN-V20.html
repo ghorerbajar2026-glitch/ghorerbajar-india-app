@@ -1,0 +1,34 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>CLICK TEST</title><style>body{display:flex;font-family:system-ui}.side{width:260px;background:#0f172a;color:#fff;padding:12px;height:100vh}.side div{padding:12px;background:#1e293b;margin:5px 0;border-radius:8px;cursor:pointer;color:#94a3b8}.side div.active{background:#334155;color:#60a5fa}.main{flex:1;padding:20px}.box{background:#fff;border:1px solid #e2e8f0;padding:20px;border-radius:12px;display:none}.box.show{display:block}</style></head><body>
+<div class="side">
+<b style="color:#22c55e">🌾 CLICK TEST V20</b>
+<div id="btn-dash" class="active" onclick="openTab('dash')">📊 Dashboard</div>
+<div id="btn-order" onclick="openTab('order')">🛒 Order + Status + Live + Bill</div>
+<div id="btn-prod" onclick="openTab('prod')">📦 Product + Photo + Both/B2B/B2C</div>
+<div id="btn-b2b" onclick="openTab('b2b')" style="background:#f59e0b;color:#fff">🤝 B2B Approval + Add</div>
+<div id="btn-settings" onclick="openTab('settings')" style="background:#4f46e5;color:#fff">⚙️ Settings + Add</div>
+<div id="btn-users" onclick="openTab('users')">👤 Users + Search</div>
+<div id="btn-pay" onclick="openTab('pay')">💳 Payment Gateway</div>
+<div id="btn-loc" onclick="openTab('loc')">📍 Location Map</div>
+</div>
+<div class="main">
+<div id="dash" class="box show"><h2>🌾 Dashboard PREMIUM FIXED ✨</h2><p>Click Working? Dashboard Middle e!</p><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px"><div style="background:#f1f5f9;padding:20px;border-radius:10px;text-align:center"><b>Orders 2</b></div><div style="background:#fffbeb;padding:20px;border-radius:10px;text-align:center"><b>B2B Pending 2</b></div></div></div>
+<div id="order" class="box"><h3>🛒 Order - Status Update + Live Map + Bill - FIXED</h3><p>✅ Status Dropdown: <select><option>pending</option><option>packed</option><option>shipped</option><option>delivered</option></select></p><p>✅ Live Map Button: <button style="width:auto">📍 Live Map</button></p><p>✅ Bill Print: <button style="width:auto;background:#4f46e5;color:#fff">Bill</button></p></div>
+<div id="prod" class="box"><h3>📦 Product + Photo Upload + Both/B2B/B2C</h3><input placeholder="Product Name"><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><input placeholder="B2C Price"><input placeholder="B2B Price"></div><select><option>Both</option><option>B2B only</option><option>B2C only</option></select><p>📸 Photo Upload: <input type="file"></p><button style="background:#16a34a">+ Add Product</button></div>
+<div id="b2b" class="box"><div style="background:#fffbeb;border:2px dashed #f59e0b;padding:12px;border-radius:10px"><h4>+ Add New B2B For Approval</h4><input placeholder="Business Name *"><input placeholder="Owner"><input placeholder="Phone *"><button style="background:#f59e0b">+ Add B2B</button></div><p style="margin-top:10px">🏢 Gupta Traders - Pending <button style="width:auto;background:#16a34a">Approve</button></p></div>
+<div id="settings" class="box"><div style="background:#eef2ff;border:2px dashed #4f46e5;padding:12px;border-radius:10px"><h4>+ Add New Setting</h4><input placeholder="Setting Name *"><input placeholder="Value *"><button style="background:#4f46e5">+ Add Setting</button></div><p style="margin-top:10px">Delivery Charge B2C: ₹40<br>Delivery Charge B2B: ₹20</p></div>
+<div id="users" class="box"><h3>👤 Users + Search - FIXED</h3><input placeholder="🔍 Search User..." style="border:2px solid #60a5fa"><p style="margin-top:10px">Arvind Kumar - B2C - Active</p></div>
+<div id="pay" class="box"><h3>💳 Payment Gateway India FULL</h3><select><option>COD</option><option>Razorpay</option><option>PhonePe</option><option>Paytm</option><option>UPI GPay</option></select><input placeholder="API Key"><button style="background:#16a34a">+ Save</button></div>
+<div id="loc" class="box"><h3>📍 Location 10KM Map - Live</h3><iframe width="100%" height="300" src="https://www.openstreetmap.org/export/embed.html?bbox=87.85%2C24.82%2C88.0%2C24.92&layer=mapnik&marker=24.8765%2C87.9248"></iframe></div>
+</div>
+<script>
+function openTab(id){
+var boxes=document.querySelectorAll('.box');
+for(var i=0;i<boxes.length;i++)boxes[i].classList.remove('show');
+document.getElementById(id).classList.add('show');
+var btns=document.querySelectorAll('.side div');
+for(var i=0;i<btns.length;i++)btns[i].classList.remove('active');
+document.getElementById('btn-'+id).classList.add('active');
+console.log('Clicked:',id);
+}
+</script>
+</body></html>
